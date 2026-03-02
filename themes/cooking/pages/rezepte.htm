@@ -1,0 +1,1611 @@
+title = "Alle Rezepte"
+url = "/rezepte"
+layout = "default"
+==
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-primary via-primary to-primary-dark py-10 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3">
+                Alle Rezepte
+            </h1>
+            <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
+                Entdecke über 10.000 köstliche Rezepte für jeden Geschmack und Anlass
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Filter & Results Section -->
+<section class="py-6 md:py-10 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Filter Bar -->
+        <div class="bg-white rounded-2xl shadow-md p-4 md:p-6 mb-8">
+            <!-- Mobile Filter Toggle -->
+            <div class="lg:hidden mb-4">
+                <button id="filter-toggle" class="w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl text-charcoal font-medium">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
+                        Filter & Sortieren
+                    </span>
+                    <svg id="filter-chevron" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filter Content -->
+            <div id="filter-content" class="hidden lg:block">
+                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+                    <!-- Sort Dropdown -->
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Sortieren</label>
+                        <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-white">
+                            <option value="beste">Beste Bewertung</option>
+                            <option value="neueste">Neueste zuerst</option>
+                            <option value="beliebt">Am beliebtesten</option>
+                            <option value="schnell">Schnellste zuerst</option>
+                        </select>
+                    </div>
+
+                    <!-- Category Selector -->
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Kategorie</label>
+                        <button id="category-btn" class="w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-xl text-sm text-left bg-white hover:border-primary transition-colors">
+                            <span id="category-label" class="text-text-muted">Alle Kategorien</span>
+                            <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Difficulty -->
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Schwierigkeit</label>
+                        <select class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-white">
+                            <option value="">Alle</option>
+                            <option value="einfach">Einfach</option>
+                            <option value="mittel">Mittel</option>
+                            <option value="schwer">Schwer</option>
+                        </select>
+                    </div>
+
+                    <!-- Duration Slider -->
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">
+                            Gesamtdauer: <span id="duration-value" class="text-primary font-semibold">Alle</span>
+                        </label>
+                        <div class="relative pt-1">
+                            <input 
+                                type="range" 
+                                id="duration-slider" 
+                                min="0" 
+                                max="4" 
+                                value="4" 
+                                step="1"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                            >
+                            <div class="flex justify-between text-xs text-text-muted mt-1">
+                                <span>15</span>
+                                <span>30</span>
+                                <span>60</span>
+                                <span>>120</span>
+                                <span>Alle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Button -->
+                    <div class="flex items-end">
+                        <button class="w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                            Filtern
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Filters -->
+                <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-sm text-text-muted">Aktive Filter:</span>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                        Vegetarisch
+                        <button class="hover:text-primary-dark">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                        Max. 30 Min
+                        <button class="hover:text-primary-dark">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </span>
+                    <button class="text-sm text-text-muted hover:text-primary underline ml-2">
+                        Alle zurücksetzen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <p class="text-text-muted text-sm">
+                <span class="font-semibold text-charcoal">847</span> Rezepte gefunden
+            </p>
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-text-muted">Ansicht:</span>
+                <button class="p-2 rounded-lg bg-primary text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                    </svg>
+                </button>
+                <button class="p-2 rounded-lg bg-warm-gray text-text-muted hover:bg-gray-300 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <!-- Recipe Card 1 -->
+            <article class="group">
+                <a href="/rezept/spaghetti-carbonara" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=640&q=80" 
+                            alt="Spaghetti Carbonara" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.8</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Spaghetti Carbonara
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                30 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-secondary/10 text-secondary rounded-full">Einfach</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 2 -->
+            <article class="group">
+                <a href="/rezept/thai-curry" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=640&q=80" 
+                            alt="Thai Curry" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.6</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Thai Kokos-Curry
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                45 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 3 -->
+            <article class="group">
+                <a href="/rezept/schoko-lava-kuchen" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=640&q=80" 
+                            alt="Schoko Lava Kuchen" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.9</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Schoko Lava Kuchen
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                25 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 4 -->
+            <article class="group">
+                <a href="/rezept/avocado-lachs-bowl" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=640&q=80" 
+                            alt="Avocado Lachs Bowl" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.7</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Avocado Lachs Bowl
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                20 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-secondary/10 text-secondary rounded-full">Einfach</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 5 -->
+            <article class="group">
+                <a href="/rezept/ratatouille" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?w=640&q=80" 
+                            alt="Ratatouille" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.5</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Ratatouille Provençale
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                60 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 6 -->
+            <article class="group">
+                <a href="/rezept/wiener-schnitzel" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1599921841143-819065a55cc6?w=640&q=80" 
+                            alt="Wiener Schnitzel" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.7</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Wiener Schnitzel
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                35 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 7 -->
+            <article class="group">
+                <a href="/rezept/griechischer-salat" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=640&q=80" 
+                            alt="Griechischer Salat" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.4</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Griechischer Salat
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                15 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-secondary/10 text-secondary rounded-full">Einfach</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Card 8 -->
+            <article class="group">
+                <a href="/rezept/beef-wellington" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1544025162-d76694265947?w=640&q=80" 
+                            alt="Beef Wellington" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.9</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Beef Wellington
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                120 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-primary/10 text-primary rounded-full">Schwer</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Recipe Cards 9 & 10 - Additional cards -->
+            <article class="group">
+                <a href="/rezept/tiramisu" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=640&q=80" 
+                            alt="Tiramisu" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.8</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Tiramisu Classico
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                30 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group">
+                <a href="/rezept/risotto-pilze" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <div class="relative h-44 md:h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=640&q=80" 
+                            alt="Pilzrisotto" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <span class="text-xs font-medium text-charcoal">4.6</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                            Pilzrisotto
+                        </h3>
+                        <div class="flex items-center justify-between text-xs text-text-muted mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                40 Min
+                            </span>
+                            <span class="px-2 py-0.5 bg-accent/20 text-accent rounded-full">Mittel</span>
+                        </div>
+                        <button class="w-full bg-primary/10 hover:bg-primary text-primary hover:text-white py-2 rounded-lg text-sm font-medium transition-all">
+                            Rezept anzeigen
+                        </button>
+                    </div>
+                </a>
+            </article>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="flex justify-center mt-10 md:mt-14">
+            <ul class="flex items-center gap-1">
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-text-muted hover:border-primary hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-medium">1</button>
+                </li>
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-charcoal hover:border-primary hover:text-primary transition-colors font-medium">2</button>
+                </li>
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-charcoal hover:border-primary hover:text-primary transition-colors font-medium">3</button>
+                </li>
+                <li class="px-2 text-text-muted">...</li>
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-charcoal hover:border-primary hover:text-primary transition-colors font-medium">85</button>
+                </li>
+                <li>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-text-muted hover:border-primary hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<!-- Category Modal -->
+<div id="category-modal" class="hidden fixed inset-0 z-50">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" id="category-modal-backdrop"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 top-1/2 -translate-y-1/2 sm:w-full sm:max-w-2xl bg-white rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden">
+        <!-- Modal Header -->
+        <div class="sticky top-0 bg-white border-b border-gray-100 px-5 py-4 flex items-center justify-between z-10">
+            <h3 class="text-lg font-semibold text-charcoal">Kategorie wählen</h3>
+            <button id="category-modal-close" class="p-2 hover:bg-warm-gray rounded-lg transition-colors">
+                <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Modal Body -->
+        <div class="overflow-y-auto max-h-[65vh] p-4">
+            <!-- Top Level Categories -->
+            <div class="space-y-2">
+                
+                <!-- ========== Backen & Süßspeisen ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">🍰 Backen & Süßspeisen</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="brot-broetchen">
+                            <span class="text-sm text-charcoal">Brot und Brötchen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="cremes">
+                            <span class="text-sm text-charcoal">Cremes</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eis">
+                            <span class="text-sm text-charcoal">Eis</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kekse-plaetzchen">
+                            <span class="text-sm text-charcoal">Kekse & Plätzchen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="konfiserie">
+                            <span class="text-sm text-charcoal">Konfiserie</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kuchen">
+                            <span class="text-sm text-charcoal">Kuchen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="tarte-quiche">
+                            <span class="text-sm text-charcoal">Tarte/Quiche</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="torten">
+                            <span class="text-sm text-charcoal">Torten</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Zubereitungsarten ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">👨‍🍳 Zubereitungsarten</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="aufstrich">
+                            <span class="text-sm text-charcoal">Aufstrich</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="backen">
+                            <span class="text-sm text-charcoal">Backen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="beilage">
+                            <span class="text-sm text-charcoal">Beilage</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="brotspeise">
+                            <span class="text-sm text-charcoal">Brotspeise</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eierspeise">
+                            <span class="text-sm text-charcoal">Eierspeise</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eintopf">
+                            <span class="text-sm text-charcoal">Eintopf</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fisch">
+                            <span class="text-sm text-charcoal">Fisch</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="frucht">
+                            <span class="text-sm text-charcoal">Frucht</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fruehstueck">
+                            <span class="text-sm text-charcoal">Frühstück</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="gemuese">
+                            <span class="text-sm text-charcoal">Gemüse</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="gewuerze-oel-essig">
+                            <span class="text-sm text-charcoal">Gewürze/Öl/Essig/Pasten</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="grundrezepte">
+                            <span class="text-sm text-charcoal">Grundrezepte</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="haltbarmachen">
+                            <span class="text-sm text-charcoal">Haltbarmachen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="krustentier-muscheln">
+                            <span class="text-sm text-charcoal">Krustentier & Muscheln</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kaese">
+                            <span class="text-sm text-charcoal">Käse</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="mehlspeisen">
+                            <span class="text-sm text-charcoal">Mehlspeisen</span>
+                        </label>
+                        
+                        <!-- Methoden (Level 3) -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="methoden">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Methoden</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="auflauf">
+                                    <span class="text-xs text-charcoal">Auflauf</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="barbecue-grill">
+                                    <span class="text-xs text-charcoal">Barbecue & Grill</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="blanchieren">
+                                    <span class="text-xs text-charcoal">Blanchieren</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="braten">
+                                    <span class="text-xs text-charcoal">Braten</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="duensten">
+                                    <span class="text-xs text-charcoal">Dünsten</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="flambieren">
+                                    <span class="text-xs text-charcoal">Flambieren</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fondue">
+                                    <span class="text-xs text-charcoal">Fondue</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="frittieren">
+                                    <span class="text-xs text-charcoal">Frittieren</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kochen">
+                                    <span class="text-xs text-charcoal">Kochen</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="marinieren">
+                                    <span class="text-xs text-charcoal">Marinieren</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="mikrowelle">
+                                    <span class="text-xs text-charcoal">Mikrowelle</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="molekularkueche">
+                                    <span class="text-xs text-charcoal">Molekularküche</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="roemertopf">
+                                    <span class="text-xs text-charcoal">Römertopf</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="schmoren">
+                                    <span class="text-xs text-charcoal">Schmoren</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="wok">
+                                    <span class="text-xs text-charcoal">Wok</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="ueberbacken">
+                                    <span class="text-xs text-charcoal">Überbacken</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="pasta">
+                            <span class="text-sm text-charcoal">Pasta</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="saucen">
+                            <span class="text-sm text-charcoal">Saucen</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="snacks">
+                            <span class="text-sm text-charcoal">Snacks und kleine Gerichte</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="suessspeisen">
+                            <span class="text-sm text-charcoal">Süßspeisen</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Saisonal ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">🌸 Saisonal</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fruehling">
+                            <span class="text-sm text-charcoal">Frühling</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="sommer">
+                            <span class="text-sm text-charcoal">Sommer</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="herbst">
+                            <span class="text-sm text-charcoal">Herbst</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="winter">
+                            <span class="text-sm text-charcoal">Winter</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="ostern">
+                            <span class="text-sm text-charcoal">Ostern</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="halloween">
+                            <span class="text-sm text-charcoal">Halloween</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="weihnachten">
+                            <span class="text-sm text-charcoal">Weihnachten</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="silvester">
+                            <span class="text-sm text-charcoal">Silvester</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Spezielles ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">⭐ Spezielles</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="babynahrung">
+                            <span class="text-sm text-charcoal">Babynahrung</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="camping">
+                            <span class="text-sm text-charcoal">Camping</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="cross-cooking">
+                            <span class="text-sm text-charcoal">Cross-Cooking</span>
+                        </label>
+                        
+                        <!-- Ernährungskonzepte (Level 3) -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="ernaehrungskonzepte">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Ernährungskonzepte</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="diabetiker">
+                                    <span class="text-xs text-charcoal">Diabetiker</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fettarm">
+                                    <span class="text-xs text-charcoal">Fettarm</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kalorienarm">
+                                    <span class="text-xs text-charcoal">Kalorienarm</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="low-fat">
+                                    <span class="text-xs text-charcoal">Low Fat</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="trennkost">
+                                    <span class="text-xs text-charcoal">Trennkost</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="vegan">
+                                    <span class="text-xs text-charcoal">Vegan</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="vegetarisch">
+                                    <span class="text-xs text-charcoal">Vegetarisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="vollwert">
+                                    <span class="text-xs text-charcoal">Vollwert</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="festlich">
+                            <span class="text-sm text-charcoal">Festlich</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fingerfood">
+                            <span class="text-sm text-charcoal">Fingerfood</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="geheimrezepte">
+                            <span class="text-sm text-charcoal">Geheimrezepte</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kinder">
+                            <span class="text-sm text-charcoal">Kinder</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="party">
+                            <span class="text-sm text-charcoal">Party</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="raffiniert-preiswert">
+                            <span class="text-sm text-charcoal">Raffiniert & preiswert</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="resteverwertung">
+                            <span class="text-sm text-charcoal">Resteverwertung</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="saucen-dips">
+                            <span class="text-sm text-charcoal">Saucen & Dips</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="schnell-einfach">
+                            <span class="text-sm text-charcoal">Schnell und einfach</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="studentenkueche">
+                            <span class="text-sm text-charcoal">Studentenküche</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="wursten">
+                            <span class="text-sm text-charcoal">Wursten</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Regional ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">🌍 Regional</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        
+                        <!-- Afrika -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="afrika">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Afrika</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="marokko">
+                                    <span class="text-xs text-charcoal">Marokko</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="suedafrika">
+                                    <span class="text-xs text-charcoal">Südafrika</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="aegypten">
+                                    <span class="text-xs text-charcoal">Ägypten</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Amerika -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="amerika">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Amerika</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="lateinamerika">
+                                    <span class="text-xs text-charcoal">Lateinamerika</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="mexico">
+                                    <span class="text-xs text-charcoal">Mexico</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="usa-kanada">
+                                    <span class="text-xs text-charcoal">USA & Kanada</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Asien -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="asien">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Asien</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="chinesisch">
+                                    <span class="text-xs text-charcoal">Chinesisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="indisch">
+                                    <span class="text-xs text-charcoal">Indisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="japanisch">
+                                    <span class="text-xs text-charcoal">Japanisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="koreanisch">
+                                    <span class="text-xs text-charcoal">Koreanisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="thailand">
+                                    <span class="text-xs text-charcoal">Thailand</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="vietnam">
+                                    <span class="text-xs text-charcoal">Vietnam</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="australien">
+                            <span class="text-sm text-charcoal">Australien</span>
+                        </label>
+
+                        <!-- Europa -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="europa">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Europa</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1 max-h-48 overflow-y-auto">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="belgien">
+                                    <span class="text-xs text-charcoal">Belgien</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="deutschland">
+                                    <span class="text-xs text-charcoal">Deutschland</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="daenemark">
+                                    <span class="text-xs text-charcoal">Dänemark</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="finnland">
+                                    <span class="text-xs text-charcoal">Finnland</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="frankreich">
+                                    <span class="text-xs text-charcoal">Frankreich</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="griechenland">
+                                    <span class="text-xs text-charcoal">Griechenland</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="grossbritannien-irland">
+                                    <span class="text-xs text-charcoal">Großbritannien & Irland</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="italien">
+                                    <span class="text-xs text-charcoal">Italien</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="niederlande">
+                                    <span class="text-xs text-charcoal">Niederlande</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="norwegen">
+                                    <span class="text-xs text-charcoal">Norwegen</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="oesterreich">
+                                    <span class="text-xs text-charcoal">Österreich</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="polen">
+                                    <span class="text-xs text-charcoal">Polen</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="portugal">
+                                    <span class="text-xs text-charcoal">Portugal</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="russland">
+                                    <span class="text-xs text-charcoal">Russland</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="schweden">
+                                    <span class="text-xs text-charcoal">Schweden</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="schweiz">
+                                    <span class="text-xs text-charcoal">Schweiz</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="spanien">
+                                    <span class="text-xs text-charcoal">Spanien</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="tuerkei">
+                                    <span class="text-xs text-charcoal">Türkei</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="ungarn">
+                                    <span class="text-xs text-charcoal">Ungarn</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="karibik-exotik">
+                            <span class="text-sm text-charcoal">Karibik & Exotik</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="mittlerer-naher-osten">
+                            <span class="text-sm text-charcoal">Mittlerer und Naher Osten</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="osteuropa">
+                            <span class="text-sm text-charcoal">Osteuropa</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Getränke ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">🍹 Getränke</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="bowle">
+                            <span class="text-sm text-charcoal">Bowle</span>
+                        </label>
+                        
+                        <!-- Cocktail (Level 3) -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="cocktail">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Cocktail</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="alkoholfrei">
+                                    <span class="text-xs text-charcoal">Alkoholfrei</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="longdrink">
+                                    <span class="text-xs text-charcoal">Longdrink</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kaffee-tee-kakao">
+                            <span class="text-sm text-charcoal">Kaffee, Tee & Kakao</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="likoer">
+                            <span class="text-sm text-charcoal">Likör</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="punsch">
+                            <span class="text-sm text-charcoal">Punsch</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="shake">
+                            <span class="text-sm text-charcoal">Shake</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ========== Menüart ========== -->
+                <div class="category-group">
+                    <button class="category-toggle w-full flex items-center justify-between px-4 py-3 bg-warm-gray rounded-xl hover:bg-gray-200 transition-colors">
+                        <span class="font-medium text-charcoal">🍽️ Menüart</span>
+                        <svg class="w-5 h-5 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="category-children hidden pl-4 mt-2 space-y-1">
+                        
+                        <!-- Beilage -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="beilage">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Beilage</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="huelsenfruechte">
+                                    <span class="text-xs text-charcoal">Hülsenfrüchte</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kartoffeln">
+                                    <span class="text-xs text-charcoal">Kartoffeln</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kloesse">
+                                    <span class="text-xs text-charcoal">Klöße</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="nudeln-beilage">
+                                    <span class="text-xs text-charcoal">Nudeln</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="reis-getreide">
+                                    <span class="text-xs text-charcoal">Reis/Getreide</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="gemuese-beilage">
+                                    <span class="text-xs text-charcoal">Gemüse</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="dessert">
+                            <span class="text-sm text-charcoal">Dessert</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fruehstueck-menu">
+                            <span class="text-sm text-charcoal">Frühstück</span>
+                        </label>
+
+                        <!-- Hauptspeise -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="hauptspeise">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Hauptspeise</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1 max-h-48 overflow-y-auto">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eintopf-haupt">
+                                    <span class="text-xs text-charcoal">Eintopf</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fisch-haupt">
+                                    <span class="text-xs text-charcoal">Fisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eier-haupt">
+                                    <span class="text-xs text-charcoal">Eier</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="gefluegel">
+                                    <span class="text-xs text-charcoal">Geflügel</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="krustentier-haupt">
+                                    <span class="text-xs text-charcoal">Krustentier & Muscheln</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="innereien">
+                                    <span class="text-xs text-charcoal">Innereien</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="lamm-ziege">
+                                    <span class="text-xs text-charcoal">Lamm & Ziege</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="pasta-nudel">
+                                    <span class="text-xs text-charcoal">Pasta & Nudel</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="pilze">
+                                    <span class="text-xs text-charcoal">Pilze</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="pizza">
+                                    <span class="text-xs text-charcoal">Pizza</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="rind">
+                                    <span class="text-xs text-charcoal">Rind</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="schwein">
+                                    <span class="text-xs text-charcoal">Schwein</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="wild-kaninchen">
+                                    <span class="text-xs text-charcoal">Wild & Kaninchen</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Salat -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="salat">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Salat</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="reis-nudeln-getreide-salat">
+                                    <span class="text-xs text-charcoal">Reis/Nudeln/Getreide</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="eier-kaese-salat">
+                                    <span class="text-xs text-charcoal">Eier & Käse</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fleisch-wurst-salat">
+                                    <span class="text-xs text-charcoal">Fleisch & Wurst</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="fruechte-salat">
+                                    <span class="text-xs text-charcoal">Früchte</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kartoffel-salat">
+                                    <span class="text-xs text-charcoal">Kartoffel</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="krustentier-fisch-salat">
+                                    <span class="text-xs text-charcoal">Krustentier & Fisch</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="salatdressing">
+                                    <span class="text-xs text-charcoal">Salatdressing</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center gap-3 px-4 py-2 hover:bg-warm-gray rounded-lg cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="warme-salate">
+                            <span class="text-sm text-charcoal">Warme Salate</span>
+                        </label>
+
+                        <!-- Suppen -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="suppen">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Suppen</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="einlagen">
+                                    <span class="text-xs text-charcoal">Einlagen</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="gebundene">
+                                    <span class="text-xs text-charcoal">Gebundene</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="klare">
+                                    <span class="text-xs text-charcoal">Klare</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="spezial-suppen">
+                                    <span class="text-xs text-charcoal">Spezial</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Vorspeisen -->
+                        <div class="category-group-l2">
+                            <div class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg">
+                                <input type="checkbox" class="parent-checkbox w-4 h-4 rounded text-primary focus:ring-primary shrink-0" value="vorspeisen">
+                                <button class="category-toggle flex-1 flex items-center justify-between transition-colors">
+                                    <span class="text-sm text-charcoal font-medium">Vorspeisen</span>
+                                    <svg class="w-4 h-4 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="category-children hidden pl-4 mt-1 space-y-1">
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="kalt">
+                                    <span class="text-xs text-charcoal">Kalt</span>
+                                </label>
+                                <label class="flex items-center gap-3 px-4 py-1.5 hover:bg-warm-gray rounded-lg cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary" value="warm">
+                                    <span class="text-xs text-charcoal">Warm</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-4 flex gap-3">
+            <button id="category-reset" class="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-charcoal font-medium hover:bg-warm-gray transition-colors">
+                Zurücksetzen
+            </button>
+            <button id="category-apply" class="flex-1 px-4 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary-dark transition-colors">
+                Anwenden
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter Toggle (Mobile)
+    const filterToggle = document.getElementById('filter-toggle');
+    const filterContent = document.getElementById('filter-content');
+    const filterChevron = document.getElementById('filter-chevron');
+
+    if (filterToggle && filterContent) {
+        filterToggle.addEventListener('click', () => {
+            filterContent.classList.toggle('hidden');
+            filterChevron.classList.toggle('rotate-180');
+        });
+    }
+
+    // Duration Slider
+    const durationSlider = document.getElementById('duration-slider');
+    const durationValue = document.getElementById('duration-value');
+    const durationLabels = ['15 Min', '30 Min', '60 Min', '>120 Min', 'Alle'];
+
+    if (durationSlider && durationValue) {
+        durationSlider.addEventListener('input', (e) => {
+            durationValue.textContent = durationLabels[e.target.value];
+        });
+    }
+
+    // Category Modal
+    const categoryBtn = document.getElementById('category-btn');
+    const categoryModal = document.getElementById('category-modal');
+    const categoryModalBackdrop = document.getElementById('category-modal-backdrop');
+    const categoryModalClose = document.getElementById('category-modal-close');
+    const categoryApply = document.getElementById('category-apply');
+
+    if (categoryBtn && categoryModal) {
+        categoryBtn.addEventListener('click', () => {
+            categoryModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        [categoryModalBackdrop, categoryModalClose, categoryApply].forEach(el => {
+            if (el) {
+                el.addEventListener('click', () => {
+                    categoryModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+    }
+
+    // Category Toggle
+    const categoryToggles = document.querySelectorAll('.category-toggle');
+    categoryToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            // Find the category-children - it's either next sibling or sibling of parent wrapper
+            const group = toggle.closest('.category-group, .category-group-l2');
+            const children = group ? group.querySelector('.category-children') : null;
+            const icon = toggle.querySelector('svg');
+            if (children) {
+                children.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+        });
+    });
+
+    // Tri-state checkbox functionality for parent-child relationship
+    function updateParentCheckboxState(parentCheckbox) {
+        const group = parentCheckbox.closest('.category-group-l2');
+        if (!group) return;
+        
+        const childrenContainer = group.querySelector('.category-children');
+        if (!childrenContainer) return;
+        
+        const childCheckboxes = childrenContainer.querySelectorAll('input[type="checkbox"]:not(.parent-checkbox)');
+        if (childCheckboxes.length === 0) return;
+        
+        const checkedCount = Array.from(childCheckboxes).filter(cb => cb.checked).length;
+        const total = childCheckboxes.length;
+        
+        if (checkedCount === 0) {
+            // None checked - unchecked state
+            parentCheckbox.checked = false;
+            parentCheckbox.indeterminate = false;
+        } else if (checkedCount === total) {
+            // All checked - checked state
+            parentCheckbox.checked = true;
+            parentCheckbox.indeterminate = false;
+        } else {
+            // Some checked - indeterminate state (shows as -)
+            parentCheckbox.checked = false;
+            parentCheckbox.indeterminate = true;
+        }
+    }
+
+    function setAllChildCheckboxes(parentCheckbox, checked) {
+        const group = parentCheckbox.closest('.category-group-l2');
+        if (!group) return;
+        
+        const childrenContainer = group.querySelector('.category-children');
+        if (!childrenContainer) return;
+        
+        const childCheckboxes = childrenContainer.querySelectorAll('input[type="checkbox"]:not(.parent-checkbox)');
+        childCheckboxes.forEach(cb => {
+            cb.checked = checked;
+        });
+    }
+
+    // Parent checkbox click handler
+    const parentCheckboxes = document.querySelectorAll('.parent-checkbox');
+    parentCheckboxes.forEach(checkbox => {
+        // Use mousedown to capture state BEFORE browser toggles it
+        let wasIndeterminate = false;
+        let wasChecked = false;
+        
+        checkbox.addEventListener('mousedown', (e) => {
+            // Capture state before the click changes it
+            wasIndeterminate = checkbox.indeterminate;
+            wasChecked = checkbox.checked;
+        });
+        
+        checkbox.addEventListener('change', (e) => {
+            e.stopPropagation();
+            
+            // If it was indeterminate or unchecked, check all. If it was checked, uncheck all.
+            const shouldCheck = wasIndeterminate || !wasChecked;
+            checkbox.indeterminate = false;
+            checkbox.checked = shouldCheck;
+            setAllChildCheckboxes(checkbox, shouldCheck);
+        });
+        
+        // Initialize state on load
+        updateParentCheckboxState(checkbox);
+    });
+
+    // Child checkbox change handler
+    const categoryGroupL2s = document.querySelectorAll('.category-group-l2');
+    categoryGroupL2s.forEach(group => {
+        const parentCheckbox = group.querySelector('.parent-checkbox');
+        const childrenContainer = group.querySelector('.category-children');
+        
+        if (parentCheckbox && childrenContainer) {
+            const childCheckboxes = childrenContainer.querySelectorAll('input[type="checkbox"]:not(.parent-checkbox)');
+            childCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    updateParentCheckboxState(parentCheckbox);
+                });
+            });
+        }
+    });
+});
+</script>

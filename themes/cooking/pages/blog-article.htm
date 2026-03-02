@@ -1,0 +1,368 @@
+title = "Blog Artikel"
+url = "/blog/:slug"
+layout = "default"
+==
+<!-- Article Hero -->
+<article>
+    <header class="bg-charcoal pt-8 pb-16 md:pt-12 md:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center gap-2 text-sm text-white/60 mb-8">
+                <a href="/" class="hover:text-white transition-colors">Home</a>
+                <span>/</span>
+                <a href="/blog" class="hover:text-white transition-colors">Blog</a>
+                <span>/</span>
+                <span class="text-white/80 truncate">Die 10 Geheimnisse für perfekte Pasta</span>
+            </nav>
+
+            <!-- Category -->
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-sm font-medium text-primary bg-primary/20 px-3 py-1 rounded-full">Kochtipps</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 leading-tight">
+                Die 10 Geheimnisse für perfekte Pasta
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-xl text-white/80 mb-8 leading-relaxed">
+                Von der Wahl der richtigen Pasta bis zum perfekten Timing – in diesem umfassenden Guide teilen wir alle Profi-Tipps, die deine Pasta-Gerichte auf das nächste Level heben.
+            </p>
+
+            <!-- Author & Meta -->
+            <div class="flex flex-wrap items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center text-secondary-light font-semibold">
+                        LM
+                    </div>
+                    <div>
+                        <p class="font-medium text-white">Lisa Müller</p>
+                        <p class="text-sm text-white/60">Food-Redakteurin</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-sm text-white/60">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        15. Januar 2025
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        8 Min Lesezeit
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Image -->
+    <div class="relative -mt-8 md:-mt-16 mb-8 md:mb-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                    src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80" 
+                    alt="Perfekte Pasta kochen" 
+                    class="w-full h-64 md:h-96 lg:h-[500px] object-cover"
+                >
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-10">
+            <!-- Share Sidebar (Desktop) -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24 flex flex-col items-center gap-3">
+                    <span class="text-xs text-text-muted font-medium mb-1">Teilen</span>
+                    <button class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                        </svg>
+                    </button>
+                    <button class="w-10 h-10 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center hover:bg-blue-800 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+                        </svg>
+                    </button>
+                    <button class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"></path>
+                        </svg>
+                    </button>
+                    <button class="w-10 h-10 bg-gray-100 text-charcoal rounded-full flex items-center justify-center hover:bg-charcoal hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Article Body -->
+            <div class="lg:col-span-11 prose prose-lg max-w-none">
+                <p class="lead text-xl text-text-muted">
+                    Pasta zu kochen scheint einfach – Wasser erhitzen, Nudeln rein, fertig. Doch zwischen einer akzeptablen und einer perfekten Pasta liegen Welten. Mit diesen zehn Geheimnissen kochst du ab sofort Pasta wie ein echter Italiener.
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">1. Der Topf macht den Unterschied</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Verwende immer einen ausreichend großen Topf. Als Faustregel gilt: mindestens 1 Liter Wasser pro 100 Gramm Pasta. In zu wenig Wasser kleben die Nudeln zusammen, und die Stärke kann nicht richtig verdünnt werden. Ein großer Topf sorgt außerdem dafür, dass das Wasser nach dem Einlegen der Pasta schneller wieder kocht.
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">2. Salz ist nicht optional</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Das Nudelwasser muss salzig sein – und zwar richtig salzig. Italiener sagen, es soll "wie das Meer" schmecken. Als Orientierung: etwa 10 Gramm Salz pro Liter Wasser. Das Salz würzt die Pasta von innen heraus. Diesen Geschmack kannst du später nicht mehr hinzufügen.
+                </p>
+
+                <blockquote class="border-l-4 border-primary pl-6 py-2 my-8 bg-primary/5 rounded-r-lg">
+                    <p class="text-charcoal italic font-medium mb-2">
+                        "Das Nudelwasser ist der beste Freund jeder Sauce. Unterschätze niemals seine Kraft."
+                    </p>
+                    <cite class="text-sm text-text-muted">— Massimo Bottura, 3-Sterne-Koch</cite>
+                </blockquote>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">3. Kein Öl ins Wasser</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Entgegen einem weit verbreiteten Mythos solltest du kein Öl ins Kochwasser geben. Das Öl verhindert, dass die Sauce später an der Pasta haftet. Die Nudeln kleben nicht zusammen, wenn du genug Wasser verwendest und regelmäßig umrührst.
+                </p>
+
+                <figure class="my-10">
+                    <img 
+                        src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1200&q=80" 
+                        alt="Perfekt gekochte Pasta" 
+                        class="w-full rounded-xl shadow-lg"
+                    >
+                    <figcaption class="text-center text-sm text-text-muted mt-3">
+                        Al dente gekochte Pasta – der Kern sollte noch einen leichten Biss haben
+                    </figcaption>
+                </figure>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">4. Al dente ist das Ziel</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    "Al dente" bedeutet "zum Zahn" – die Pasta sollte noch einen leichten Widerstand beim Beißen haben. Koste die Pasta 2 Minuten vor Ende der angegebenen Kochzeit und dann alle 30 Sekunden. Der perfekte Moment ist schnell vorbei!
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">5. Das flüssige Gold: Nudelwasser</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Bevor du die Pasta abgießt, schöpfe mindestens eine Tasse Nudelwasser ab. Dieses stärkehaltige Wasser ist der Schlüssel zu seidig-cremigen Saucen. Es bindet Saucen, macht sie glänzend und hilft, dass alles perfekt zusammenkommt. Italienische Köche nennen es "oro liquido" – flüssiges Gold.
+                </p>
+
+                <div class="bg-warm-gray p-6 rounded-xl my-8">
+                    <h3 class="flex items-center gap-2 font-semibold text-charcoal text-lg mb-4">
+                        <span class="text-xl">💡</span>
+                        Praktischer Tipp
+                    </h3>
+                    <p class="text-text-muted">
+                        Stelle dir eine Tasse neben den Topf, bevor du das Wasser abgießt. So vergisst du nicht, das kostbare Nudelwasser aufzufangen. Lieber zu viel aufheben als zu wenig – was du nicht brauchst, kannst du wegschütten.
+                    </p>
+                </div>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">6. Nicht abschrecken!</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Spüle gekochte Pasta niemals unter kaltem Wasser ab. Dadurch wäschst du die Stärke weg, die für die Saucenbindung essenziell ist. Die einzige Ausnahme: Pasta für Salate, die kalt serviert werden soll.
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">7. Die Sauce wartet auf die Pasta</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Deine Sauce sollte fertig sein, bevor die Pasta gar ist. Die Pasta wartet nicht – sie wird pappig. Heiße Pasta trifft auf heiße Sauce, direkt in der Pfanne. Niemals Pasta auf den Teller geben und Sauce drübergießen!
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">8. Die Vermählung in der Pfanne</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Die Pasta soll in der Sauce fertig garen, nicht im Kochwasser. Gib die noch leicht bissfeste Pasta direkt in die Pfanne mit der Sauce und lass sie dort bei mittlerer Hitze 1-2 Minuten ziehen. So nimmt die Pasta die Aromen der Sauce auf und verbindet sich harmonisch mit ihr.
+                </p>
+
+                <figure class="my-10">
+                    <img 
+                        src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=1200&q=80" 
+                        alt="Pasta in der Pfanne" 
+                        class="w-full rounded-xl shadow-lg"
+                    >
+                    <figcaption class="text-center text-sm text-text-muted mt-3">
+                        In der Pfanne werden Pasta und Sauce zu einer Einheit
+                    </figcaption>
+                </figure>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">9. Die richtige Nudelform zur Sauce</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Die Form der Pasta ist kein Zufall. Lange, dünne Pasta wie Spaghetti passt zu leichten, öligen Saucen. Röhren wie Penne oder Rigatoni fangen fleischige Ragùs perfekt ein. Muscheln und Orecchiette halten cremige Saucen in ihren Vertiefungen. Denke immer: Welche Sauce passt zu welcher Form?
+                </p>
+
+                <h2 class="text-2xl font-display font-bold text-charcoal mt-10 mb-4">10. Der letzte Schliff</h2>
+                <p class="text-text-muted leading-relaxed mb-6">
+                    Nimm die Pfanne vom Herd und rühre einen Esslöffel kalte Butter und etwas Nudelwasser unter. Diese "Mantecatura"-Technik erzeugt eine samtig-glänzende Sauce. Zum Schluss frisch geriebener Parmesan oder Pecorino – aber bitte echten Hartkäse, keinen aus der Tüte.
+                </p>
+
+                <div class="bg-primary/10 border border-primary/20 p-6 rounded-xl my-10">
+                    <h3 class="font-semibold text-charcoal text-lg mb-4">
+                        Zusammenfassung: Die Goldenen Regeln
+                    </h3>
+                    <ul class="space-y-2 text-text-muted">
+                        <li class="flex items-start gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            Viel Wasser, viel Salz
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            Kein Öl ins Kochwasser
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            Nudelwasser aufheben
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            Al dente kochen, nicht länger
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            Pasta trifft Sauce in der Pfanne
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="text-text-muted leading-relaxed">
+                    Mit diesen zehn Tipps hast du das Handwerkszeug für perfekte Pasta-Gerichte. Aber wie bei allem in der Küche gilt: Übung macht den Meister. Also ran an den Topf und probiere es aus! Deine Geschmacksnerven werden es dir danken.
+                </p>
+            </div>
+        </div>
+
+        <!-- Mobile Share Bar -->
+        <div class="flex items-center justify-center gap-4 mt-12 lg:hidden">
+            <span class="text-sm text-text-muted font-medium">Teilen:</span>
+            <button class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                </svg>
+            </button>
+            <button class="w-10 h-10 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+                </svg>
+            </button>
+            <button class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Author Box -->
+        <div class="mt-12 p-6 md:p-8 bg-warm-gray rounded-2xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-bold text-xl flex-shrink-0">
+                    LM
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-charcoal text-lg mb-1">Lisa Müller</h3>
+                    <p class="text-sm text-text-muted mb-3">Food-Redakteurin</p>
+                    <p class="text-text-muted text-sm">
+                        Lisa ist leidenschaftliche Köchin und schreibt seit über 5 Jahren über alles rund ums Kochen. Ihr Spezialgebiet ist die italienische Küche, die sie während eines Jahres in Rom perfektioniert hat.
+                    </p>
+                </div>
+                <button class="px-4 py-2 bg-charcoal text-white text-sm font-medium rounded-lg hover:bg-charcoal/80 transition-colors">
+                    Alle Artikel
+                </button>
+            </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="mt-8 flex flex-wrap items-center gap-2">
+            <span class="text-sm text-text-muted font-medium mr-2">Tags:</span>
+            <a href="/blog?tag=pasta" class="px-3 py-1 bg-white border border-gray-200 text-sm text-charcoal rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors">Pasta</a>
+            <a href="/blog?tag=kochtipps" class="px-3 py-1 bg-white border border-gray-200 text-sm text-charcoal rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors">Kochtipps</a>
+            <a href="/blog?tag=italienisch" class="px-3 py-1 bg-white border border-gray-200 text-sm text-charcoal rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors">Italienisch</a>
+            <a href="/blog?tag=basics" class="px-3 py-1 bg-white border border-gray-200 text-sm text-charcoal rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors">Basics</a>
+        </div>
+    </div>
+</article>
+
+<!-- Related Articles -->
+<section class="py-12 md:py-16 bg-cream border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-display font-bold text-charcoal mb-8">
+            Das könnte dich auch interessieren
+        </h2>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- Related Article 1 -->
+            <article class="group">
+                <a href="/blog/sauerteig-anfaenger" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" 
+                            alt="Sauerteig für Anfänger" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">Küchentechnik</span>
+                            <span class="text-xs text-text-muted">10. Januar 2025</span>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            Sauerteig für Anfänger: Der komplette Guide
+                        </h3>
+                        <p class="text-text-muted text-sm line-clamp-2">
+                            Dein eigener Sauerteig-Starter in nur 7 Tagen. Mit Schritt-für-Schritt Anleitung und allen Tipps, die du brauchst.
+                        </p>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Related Article 2 -->
+            <article class="group">
+                <a href="/blog/olivenoel-kaufguide" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80" 
+                            alt="Olivenöl Kaufguide" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-medium text-secondary bg-secondary/10 px-2 py-1 rounded-full">Zutaten</span>
+                            <span class="text-xs text-text-muted">1. Januar 2025</span>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            Olivenöl: Wie du gute Qualität erkennst
+                        </h3>
+                        <p class="text-text-muted text-sm line-clamp-2">
+                            Extra vergine, kaltgepresst, naturtrüb – was bedeutet das alles? Unser Kaufguide klärt auf.
+                        </p>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Related Article 3 -->
+            <article class="group">
+                <a href="/blog/messerschaerfen-guide" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1593618998160-e34014e67546?w=600&q=80" 
+                            alt="Messerschärfen Guide" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">Küchentechnik</span>
+                            <span class="text-xs text-text-muted">3. Januar 2025</span>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            Der ultimative Guide zum Messerschärfen zu Hause
+                        </h3>
+                        <p class="text-text-muted text-sm line-clamp-2">
+                            Scharfe Messer sind sicherer und machen das Kochen zum Vergnügen. So schärfst du wie ein Profi.
+                        </p>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================
+   CHECKBOX STYLING
+   ====================== */
+
+/* Prevent strikethrough on checked labels */
+label:has(input[type="checkbox"]:checked) span {
+    text-decoration: none !important;
+}
+
+/* Ensure checkbox labels don't inherit any strikethrough */
+.category-group label span,
+.category-group-l2 label span,
+#category-modal label span,
+#category-modal span {
+    text-decoration: none !important;
+}
+
+/* Parent checkbox must be clickable */
+.parent-checkbox {
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 10;
+    position: relative;
+}
+
+/* ======================
+   CUSTOM UTILITIES
+   ====================== */
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ======================
+   RANGE SLIDER STYLING
+   ====================== */
+
+/* Custom range slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #E85A4F;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #E85A4F;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ======================
+   ANIMATIONS
+   ====================== */
+
+/* Carousel Animation (Legacy) */
+@keyframes slideShow {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    8%, 25% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    33%, 100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+.carousel-image {
+    animation: slideShow 15s infinite;
+}
+
+.carousel-image:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.carousel-image:nth-child(2) {
+    animation-delay: 5s;
+}
+
+.carousel-image:nth-child(3) {
+    animation-delay: 10s;
+}
+
+/* Smooth scroll snap for recipe carousel */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+    scroll-snap-align: start;
+}
+
+/* ======================
+   HERO OVERLAYS
+   ====================== */
+
+/* Hero Overlay - Mobile First */
+.hero-overlay {
+    background: 
+        linear-gradient(135deg, rgba(156, 175, 136, 0.6) 0%, rgba(212, 165, 154, 0.5) 100%),
+        linear-gradient(135deg, rgba(44, 44, 44, 0.4) 0%, rgba(44, 44, 44, 0.3) 100%);
+}
+
+@media (min-width: 768px) {
+    .hero-overlay {
+        background: 
+            linear-gradient(135deg, rgba(156, 175, 136, 0.5) 0%, rgba(212, 165, 154, 0.4) 100%),
+            linear-gradient(135deg, rgba(44, 44, 44, 0.35) 0%, rgba(44, 44, 44, 0.25) 100%);
+    }
+}
+
+/* Text Readability */
+.hero-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                 -1px -1px 2px rgba(0, 0, 0, 0.6),
+                 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.hero-text-sm {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8),
+                 -1px -1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* ======================
+   COMPONENT STYLES
+   ====================== */
+
+/* Recipe card hover effects */
+.recipe-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.15);
+}
+
+/* Category button active state */
+.category-btn.active {
+    background-color: #E85A4F;
+    color: white;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+/* Checkbox styling for shopping list */
+input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* ======================
+   PROSE STYLES (Blog)
+   ====================== */
+
+.prose p {
+    margin-bottom: 1.25rem;
+}
+
+.prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose img {
+    margin: 2rem 0;
+}
+
+.prose blockquote {
+    margin: 2rem 0;
+}
+
+.prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.prose ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* Lead paragraph styling */
+.prose .lead {
+    font-size: 1.25rem;
+    color: #6B7280;
+    margin-bottom: 2rem;
+}
+
+/* ======================
+   MOBILE OPTIMIZATIONS
+   ====================== */
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) {
+    .tap-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Smooth momentum scrolling on iOS */
+.scroll-smooth {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ======================
+   SECONDARY COLOR VARIANTS
+   ====================== */
+
+.text-secondary-light {
+    color: #5A9A6D;
+}
+
+.bg-secondary-light {
+    background-color: #5A9A6D;
+}

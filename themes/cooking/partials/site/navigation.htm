@@ -1,0 +1,140 @@
+<!-- Navigation Header -->
+<header class="fixed w-full bg-white/98 backdrop-blur-md shadow-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a href="/" class="flex items-center gap-2">
+                    <span class="text-2xl">🍳</span>
+                    <span class="text-xl md:text-2xl font-display font-bold text-primary tracking-tight">
+                        Zutato
+                    </span>
+                </a>
+            </div>
+
+            <!-- Search Bar - Center (Hidden on small mobile, visible from sm up) -->
+            <div class="hidden sm:flex flex-1 max-w-md mx-4 lg:mx-8">
+                <div class="relative w-full">
+                    <input 
+                        type="text" 
+                        placeholder="Rezept suchen..." 
+                        class="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-warm-gray/50 placeholder-text-muted transition-all"
+                    >
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center space-x-6">
+                <a href="/rezepte" class="text-sm font-medium text-charcoal hover:text-primary transition-colors duration-300">
+                    Alle Rezepte
+                </a>
+                <a href="/blog" class="text-sm font-medium text-charcoal hover:text-primary transition-colors duration-300">
+                    Blog
+                </a>
+            </nav>
+
+            <!-- Mobile: Search + Menu Button -->
+            <div class="flex items-center gap-2 lg:hidden">
+                <!-- Mobile Search Button (visible on xs screens) -->
+                <button id="mobile-search-button" class="sm:hidden p-2 text-charcoal hover:text-primary transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="p-2 text-charcoal hover:text-primary transition-colors">
+                    <svg id="menu-icon-open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="menu-icon-close" class="hidden h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Overlay (for xs screens) -->
+    <div id="mobile-search-overlay" class="hidden sm:hidden bg-white border-t border-gray-100 px-4 py-3">
+        <div class="relative">
+            <input 
+                type="text" 
+                placeholder="Rezept suchen..." 
+                class="w-full pl-10 pr-4 py-3 rounded-full border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-base bg-warm-gray/50 placeholder-text-muted"
+            >
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100">
+        <div class="px-4 py-4 space-y-1">
+            <a href="/rezepte" class="flex items-center gap-3 px-4 py-3 text-charcoal hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                Alle Rezepte
+            </a>
+            <a href="/blog" class="flex items-center gap-3 px-4 py-3 text-charcoal hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                </svg>
+                Blog
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-16 md:h-20"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+        const mobileSearchButton = document.getElementById('mobile-search-button');
+        const mobileSearchOverlay = document.getElementById('mobile-search-overlay');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuIconOpen.classList.toggle('hidden');
+                menuIconClose.classList.toggle('hidden');
+                // Close search if open
+                if (mobileSearchOverlay) {
+                    mobileSearchOverlay.classList.add('hidden');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                });
+            });
+        }
+
+        if (mobileSearchButton && mobileSearchOverlay) {
+            mobileSearchButton.addEventListener('click', () => {
+                mobileSearchOverlay.classList.toggle('hidden');
+                // Close menu if open
+                if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
