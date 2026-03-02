@@ -229,7 +229,7 @@ const baseUrl = process.env.VITE_BASE || '/themes/cooking';
 
 export default defineConfig({
     envDir: '../../',
-    base: `${baseUrl}/${defaultOutDir}`,
+    base: `${process.env.VITE_BASE}/${defaultOutDir}`,
     build: {
         outDir: defaultOutDir,
         assetsDir: '',
@@ -253,7 +253,6 @@ export default defineConfig({
         }),
     ],
 });
-
 ```
 
 **5. Add npm scripts to `package.json`:**
@@ -263,7 +262,7 @@ export default defineConfig({
     "dev": "vite",
     "build": "vite build",
     "watch": "npx tailwindcss -i assets/src/css/theme-cooking.css -o assets/css/theme-cooking.css --watch"
-},
+}
 ```
 
 ---
@@ -346,6 +345,110 @@ Apply changes:
 
 ```bash
 php artisan winter:up
+```
+
+---
+
+## Database & Migrations
+
+### Run all pending migrations
+
+Execute all new migrations across all installed plugins:
+
+```bash
+php artisan winter:up
+```
+
+---
+
+### Refresh a specific plugin
+
+**Drops all tables and re-runs migrations** for a plugin (⚠️ destroys all data):
+
+```bash
+php artisan plugin:refresh Author.PluginName
+```
+
+Example:
+
+```bash
+php artisan plugin:refresh Ddk.Recipes
+```
+
+---
+
+### Create a new migration
+
+Generate a new migration file for a plugin:
+
+```bash
+php artisan create:migration Author.PluginName MigrationName
+```
+
+Example - creating a table:
+
+```bash
+php artisan create:migration Ddk.Recipes CreateRecipeTable
+```
+
+Example - updating an existing table:
+
+```bash
+php artisan create:migration Ddk.Recipes AddNewFieldsToRecipesTable
+```
+
+The migration file will be created in:
+
+```
+plugins/author/pluginname/updates/
+```
+
+---
+
+### Migration best practices
+
+**Initial table creation:**
+Include all fields in the initial `create_table` migration when first developing the plugin.
+
+**Adding fields to existing tables:**
+If the table already exists and contains data, create a new migration:
+
+```php
+<?php namespace Author\Plugin\Updates;
+
+use Schema;
+use Winter\Storm\Database\Updates\Migration;
+
+class AddAddressFieldsToTable extends Migration
+{
+    public function up()
+    {
+        Schema::table('author_plugin_table', function($table)
+        {
+            $table->string('new_field')->nullable();
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('author_plugin_table', function($table)
+        {
+            $table->dropColumn('new_field');
+        });
+    }
+}
+```
+
+**Register migrations:**
+Each migration must be listed in `version.yaml`:
+
+```yaml
+1.0.1:
+    - First version
+    - create_recipes_table.php
+1.0.2:
+    - Added new fields
+    - add_new_fields_to_recipes_table.php
 ```
 
 ---

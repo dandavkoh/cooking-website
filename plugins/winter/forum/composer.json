@@ -1,0 +1,42 @@
+{
+    "name": "winter/wn-forum-plugin",
+    "type": "winter-plugin",
+    "description": "Forum plugin for Winter CMS",
+    "homepage": "https://github.com/wintercms/wn-forum-plugin",
+    "keywords": ["winter", "wintercms", "forum"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Bobkov",
+            "email": "aleksey.bobkov@gmail.com",
+            "role": "Original Author"
+        },
+        {
+            "name": "Samuel Georges",
+            "email": "daftspunky@gmail.com",
+            "role": "Original Author"
+        },
+        {
+            "name": "Winter CMS Maintainers",
+            "homepage": "https://wintercms.com",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/wintercms/wn-forum-plugin/issues",
+        "discord": "https://discord.gg/D5MFSPH6Ux",
+        "source": "https://github.com/wintercms/wn-forum-plugin"
+    },
+    "require": {
+        "php": ">=7.0",
+        "winter/wn-backend-module": "^1.2.8|dev-develop",
+        "winter/wn-user-plugin": "~2.0.0|dev-main",
+        "composer/installers": "~1.0"
+    },
+    "replace": {
+        "rainlab/forum-plugin": "~1.2"
+    },
+    "extra": {
+        "installer-name": "forum"
+    }
+}

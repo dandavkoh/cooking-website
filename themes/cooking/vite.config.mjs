@@ -10,7 +10,7 @@ export default defineConfig({
     build: {
         outDir: defaultOutDir,
         assetsDir: '',
-        manifest: true
+        manifest: true,
     },
     plugins: [
         laravel({

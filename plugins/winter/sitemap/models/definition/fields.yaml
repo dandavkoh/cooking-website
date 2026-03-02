@@ -1,0 +1,17 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    form_sitemap_url:
+        type: partial
+        context: update
+
+tabs:
+    stretch: true
+
+    fields:
+        items:
+            stretch: true
+            tab: winter.sitemap::lang.item.definition
+            type: Winter\Sitemap\FormWidgets\SitemapItems
