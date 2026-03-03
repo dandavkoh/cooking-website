@@ -1,0 +1,7 @@
+# ===================================
+#  Reorder Behavior Config
+# ===================================
+
+title: ddk.recipe::lang.recipe.categories
+modelClass: Ddk\Recipe\Models\Category
+nameFrom: title

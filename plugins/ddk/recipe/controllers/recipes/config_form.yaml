@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Recipe
+form: ~/plugins/ddk/recipe/models/recipe/fields.yaml
+modelClass: Ddk\Recipe\Models\Recipe
+defaultRedirect: ddk/recipe/recipes
+
+create:
+    redirect: ddk/recipe/recipes/update/:id
+    redirectClose: ddk/recipe/recipes
+
+update:
+    redirect: ddk/recipe/recipes
+    redirectClose: ddk/recipe/recipes

@@ -1,0 +1,21 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+list: ~/plugins/ddk/recipe/models/ingredient/columns.yaml
+modelClass: Ddk\Recipe\Models\Ingredient
+title: ddk.recipe::lang.recipe.ingredients
+recordUrl: ddk/recipe/ingredients/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 25
+showSetup: true
+showSorting: true
+defaultSort:
+    column: title
+    direction: asc
+showCheckboxes: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

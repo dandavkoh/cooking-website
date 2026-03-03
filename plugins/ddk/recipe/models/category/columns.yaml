@@ -1,0 +1,37 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        type: number
+        invisible: true
+
+    title:
+        label: ddk.recipe::lang.recipe.title
+        searchable: true
+        sortable: true
+
+    slug:
+        label: ddk.recipe::lang.recipe.slug
+        searchable: true
+
+    # parent:
+    #     label: ddk.recipe::lang.recipe.parent_category
+    #     relation: parent
+    #     select: title
+
+    sort_order:
+        label: ddk.recipe::lang.recipe.sort_order
+        type: number
+
+    created_at:
+        label: ddk.recipe::lang.recipe.created_at
+        type: datetime
+        invisible: true
+
+    updated_at:
+        label: ddk.recipe::lang.recipe.updated_at
+        type: datetime
+        invisible: true

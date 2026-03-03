@@ -1,6 +1,9 @@
 title = "Rezept Detail"
 url = "/rezept/:slug"
 layout = "default"
+
+[recipeDetail]
+slug = "{{ :slug }}"
 ==
 <!-- Recipe Hero -->
 <section class="bg-charcoal">
@@ -9,8 +12,8 @@ layout = "default"
             <!-- Recipe Image -->
             <div class="relative h-64 sm:h-80 lg:h-[500px]">
                 <img 
-                    src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=1200&q=80" 
-                    alt="Spaghetti Carbonara" 
+                    src="{% if recipe.images.first %}{{ recipe.images.first.path }}{% else %}https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&q=80{% endif %}" 
+                    alt="{{ recipe.title }}" 
                     class="w-full h-full object-cover"
                 >
                 <!-- Gradient overlay for mobile text readability -->
@@ -25,25 +28,27 @@ layout = "default"
                     <span>/</span>
                     <a href="/rezepte" class="hover:text-white transition-colors">Rezepte</a>
                     <span>/</span>
-                    <span class="text-white">Spaghetti Carbonara</span>
+                    <span class="text-white">{{ recipe.title }}</span>
                 </nav>
 
                 <!-- Categories -->
                 <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full">Pasta</span>
-                    <span class="text-xs px-3 py-1 bg-secondary/20 text-secondary-light rounded-full">Italienisch</span>
-                    <span class="text-xs px-3 py-1 bg-accent/20 text-accent rounded-full">Hauptspeise</span>
+                    {% for category in recipe.categories %}
+                    <span class="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full">{{ category.title }}</span>
+                    {% endfor %}
                 </div>
 
                 <!-- Title -->
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-white mb-2">
-                    Spaghetti Carbonara
+                    {{ recipe.title }}
                 </h1>
                 
                 <!-- Subtitle -->
+                {% if recipe.subtitle %}
                 <p class="text-lg lg:text-xl text-white/80 mb-6">
-                    Klassische italienische Pasta mit cremiger Eiersauce
+                    {{ recipe.subtitle }}
                 </p>
+                {% endif %}
 
                 <!-- Meta Info -->
                 <div class="flex flex-wrap items-center gap-4 md:gap-6 mb-6">
@@ -52,7 +57,7 @@ layout = "default"
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span class="text-sm">30 Minuten</span>
+                        <span class="text-sm">{{ recipe.total_time }} Minuten</span>
                     </div>
 
                     <!-- Difficulty -->
@@ -60,7 +65,7 @@ layout = "default"
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
-                        <span class="text-sm">Einfach</span>
+                        <span class="text-sm">{% if recipe.difficulty == 'easy' %}Einfach{% elseif recipe.difficulty == 'medium' %}Mittel{% else %}Schwer{% endif %}</span>
                     </div>
 
                     <!-- Rating -->
@@ -122,12 +127,14 @@ layout = "default"
 <section class="py-8 md:py-12 bg-cream">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Description -->
+        {% if recipe.description %}
         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-8">
             <h2 class="text-xl md:text-2xl font-display font-bold text-charcoal mb-4">Über dieses Rezept</h2>
             <p class="text-text-muted leading-relaxed">
-                Spaghetti Carbonara ist eines der berühmtesten Pasta-Gerichte der italienischen Küche. Dieses klassische römische Rezept besticht durch seine cremige Sauce aus Eigelb, Pecorino Romano und knusprig gebratenem Guanciale. Die Kunst liegt darin, die perfekte Konsistenz zu erreichen – cremig, aber nicht klumpig. Anders als viele glauben, enthält eine authentische Carbonara keine Sahne. Die Cremigkeit entsteht ausschließlich durch das vorsichtige Vermengen der heißen Pasta mit der Ei-Käse-Mischung. Mit unserer Schritt-für-Schritt-Anleitung gelingt dir dieses köstliche Gericht garantiert. Perfekt für ein schnelles Abendessen unter der Woche oder als Highlight beim nächsten Dinner mit Freunden. Die Zubereitung dauert nur etwa 30 Minuten und das Ergebnis ist ein authentisches italienisches Geschmackserlebnis, das deine Gäste begeistern wird.
+                {{ recipe.description }}
             </p>
         </div>
+        {% endif %}
 
         <div class="grid lg:grid-cols-3 gap-8">
             <!-- Ingredients Column -->
@@ -144,7 +151,7 @@ layout = "default"
                             <button id="portion-decrease" class="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-primary hover:text-white transition-colors text-charcoal font-bold">
                                 −
                             </button>
-                            <span id="portion-count" class="text-lg font-bold text-charcoal w-8 text-center">4</span>
+                            <span id="portion-count" class="text-lg font-bold text-charcoal w-8 text-center" data-base-portion="{{ recipe.portions|default(4) }}">{{ recipe.portions|default(4) }}</span>
                             <button id="portion-increase" class="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-primary hover:text-white transition-colors text-charcoal font-bold">
                                 +
                             </button>
@@ -153,62 +160,21 @@ layout = "default"
 
                     <!-- Ingredients List -->
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
+                        {% for ri in recipe.recipe_ingredients %}
+                        <li class="flex items-start gap-3 pb-3 {{ not loop.last ? 'border-b border-gray-100' : '' }}">
                             <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
                             <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="400">400</span>
-                                <span class="text-charcoal">g Spaghetti</span>
+                                {% if ri.quantity %}
+                                <span class="ingredient-amount font-semibold text-charcoal" data-base="{{ ri.quantity }}">{{ ri.quantity|round(1) }}</span>
+                                {% endif %}
+                                <span class="text-charcoal">{% if ri.unit %}{{ ri.unit.title }} {% endif %}{{ ri.ingredient.title }}{% if ri.note %} ({{ ri.note }}){% endif %}</span>
                             </span>
                         </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="150">150</span>
-                                <span class="text-charcoal">g Guanciale (oder Pancetta)</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="4">4</span>
-                                <span class="text-charcoal">Eigelb</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="2">2</span>
-                                <span class="text-charcoal">ganze Eier</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="100">100</span>
-                                <span class="text-charcoal">g Pecorino Romano, fein gerieben</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="ingredient-amount font-semibold text-charcoal" data-base="50">50</span>
-                                <span class="text-charcoal">g Parmesan, fein gerieben</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="text-charcoal">Frisch gemahlener schwarzer Pfeffer</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
-                                <span class="text-charcoal">Salz für das Nudelwasser</span>
-                            </span>
-                        </li>
+                        {% endfor %}
                     </ul>
-
+                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
+                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
+                            <span class="flex-1">
                     <!-- Add to Shopping List -->
                     <button class="w-full mt-6 flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white py-3 rounded-xl font-medium transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,83 +192,21 @@ layout = "default"
 
                     <!-- Steps -->
                     <div class="space-y-8">
-                        <!-- Step 1 -->
+                        {% for step in recipe.steps %}
                         <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                1
+                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 {{ loop.last ? 'bg-secondary' : 'bg-primary' }} rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                {{ loop.last ? '✓' : step.step_number }}
                             </div>
                             <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Guanciale vorbereiten</h3>
+                                {% if step.title %}
+                                <h3 class="font-semibold text-charcoal text-lg mb-2">{{ step.title }}</h3>
+                                {% endif %}
                                 <p class="text-text-muted leading-relaxed">
-                                    Den Guanciale in etwa 1 cm dicke Streifen schneiden. In einer großen Pfanne bei mittlerer Hitze ohne zusätzliches Fett langsam auslassen, bis er knusprig und goldbraun ist. Das dauert etwa 8-10 Minuten. Das ausgetretene Fett in der Pfanne lassen – das ist später wichtig für die Sauce.
+                                    {{ step.description }}
                                 </p>
                             </div>
                         </div>
-
-                        <!-- Step 2 -->
-                        <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                2
-                            </div>
-                            <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Nudelwasser aufsetzen</h3>
-                                <p class="text-text-muted leading-relaxed">
-                                    Einen großen Topf mit reichlich Wasser zum Kochen bringen und großzügig salzen. Das Wasser sollte "wie das Meer" schmecken. Das Salz sorgt dafür, dass die Pasta von innen gewürzt wird.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                3
-                            </div>
-                            <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Ei-Käse-Mischung zubereiten</h3>
-                                <p class="text-text-muted leading-relaxed">
-                                    In einer großen Schüssel die Eigelbe und ganzen Eier verquirlen. Den geriebenen Pecorino und Parmesan hinzufügen und alles zu einer cremigen Masse verrühren. Großzügig frisch gemahlenen schwarzen Pfeffer hinzugeben – das ist charakteristisch für die Carbonara.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Step 4 -->
-                        <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                4
-                            </div>
-                            <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Pasta kochen</h3>
-                                <p class="text-text-muted leading-relaxed">
-                                    Die Spaghetti im kochenden Salzwasser nach Packungsanweisung al dente kochen. Etwa 2 Minuten vor Ende der Garzeit eine Tasse Nudelwasser abschöpfen und beiseite stellen – dieses stärkehaltige Wasser hilft später, die Sauce zu binden.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Step 5 -->
-                        <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                5
-                            </div>
-                            <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Alles verbinden</h3>
-                                <p class="text-text-muted leading-relaxed">
-                                    Die Pfanne mit dem Guanciale vom Herd nehmen und kurz abkühlen lassen (wichtig!). Die abgetropfte Pasta direkt in die Pfanne geben und gut durchschwenken. Dann die Ei-Käse-Mischung hinzugeben und schnell vermengen. Die Hitze des Guanciale und der Pasta gart das Ei sanft und erzeugt die cremige Sauce. Bei Bedarf etwas Nudelwasser hinzufügen, bis die gewünschte Konsistenz erreicht ist.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Step 6 -->
-                        <div class="flex gap-4 md:gap-6">
-                            <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                ✓
-                            </div>
-                            <div class="flex-1 pt-1">
-                                <h3 class="font-semibold text-charcoal text-lg mb-2">Servieren</h3>
-                                <p class="text-text-muted leading-relaxed">
-                                    Sofort auf vorgewärmten Tellern servieren. Mit extra geriebenem Pecorino und frisch gemahlenem schwarzen Pfeffer garnieren. Dazu passt ein knuspriges Ciabatta und ein Glas trockener italienischer Weißwein.
-                                </p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
 
                     <!-- Tips Section -->
@@ -452,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const portionIncrease = document.getElementById('portion-increase');
     const portionCount = document.getElementById('portion-count');
     const ingredientAmounts = document.querySelectorAll('.ingredient-amount');
-    const basePortion = 4;
+    const basePortion = portionCount ? parseInt(portionCount.dataset.basePortion) || 4 : 4;
 
     function updateIngredients(newPortion) {
         const ratio = newPortion / basePortion;

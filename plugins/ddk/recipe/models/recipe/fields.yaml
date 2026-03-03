@@ -1,0 +1,133 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: ddk.recipe::lang.recipe.title
+        span: left
+        type: text
+        required: true
+
+    slug:
+        label: ddk.recipe::lang.recipe.slug
+        span: right
+        type: text
+        preset:
+            field: title
+            type: slug
+
+    subtitle:
+        label: ddk.recipe::lang.recipe.subtitle
+        span: full
+        type: text
+
+tabs:
+    stretch: true
+    fields:
+        description:
+            tab: Details
+            label: ddk.recipe::lang.recipe.description
+            type: richeditor
+            size: large
+
+        portions:
+            tab: Details
+            label: ddk.recipe::lang.recipe.portions
+            span: left
+            type: number
+            default: 4
+
+        difficulty:
+            tab: Details
+            label: ddk.recipe::lang.recipe.difficulty
+            span: right
+            type: dropdown
+            default: medium
+
+        working_time_minutes:
+            tab: Details
+            label: ddk.recipe::lang.recipe.working_time
+            span: left
+            type: number
+
+        cooking_time_minutes:
+            tab: Details
+            label: ddk.recipe::lang.recipe.cooking_time
+            span: right
+            type: number
+
+        _ingredients:
+            tab: ddk.recipe::lang.recipe.ingredients
+            type: repeater
+            prompt: Add ingredient
+            sortable: true
+            form:
+                fields:
+                    ingredient_id:
+                        label: ddk.recipe::lang.recipe.ingredient
+                        type: dropdown
+                        span: left
+                        required: true
+                    quantity:
+                        label: ddk.recipe::lang.recipe.quantity
+                        type: number
+                        span: auto
+                        step: 0.01
+                    unit_id:
+                        label: ddk.recipe::lang.recipe.unit
+                        type: dropdown
+                        span: auto
+                    note:
+                        label: ddk.recipe::lang.recipe.note
+                        type: text
+                        span: auto
+
+        _steps:
+            tab: ddk.recipe::lang.recipe.steps
+            type: repeater
+            prompt: Add step
+            sortable: true
+            form:
+                fields:
+                    step_number:
+                        label: ddk.recipe::lang.recipe.step_number
+                        type: number
+                        span: auto
+                        required: true
+                    title:
+                        label: ddk.recipe::lang.recipe.step_title
+                        type: text
+                        span: auto
+                    description:
+                        label: ddk.recipe::lang.recipe.step_description
+                        type: textarea
+                        size: small
+                        required: true
+
+        categories:
+            tab: ddk.recipe::lang.recipe.categories
+            type: relation
+            nameFrom: title
+
+        images:
+            tab: ddk.recipe::lang.recipe.images
+            type: fileupload
+            mode: image
+            imageWidth: 300
+            imageHeight: 200
+            useCaption: true
+
+        is_published:
+            tab: Settings
+            label: ddk.recipe::lang.recipe.is_published
+            span: left
+            type: switch
+            default: false
+
+        published_at:
+            tab: Settings
+            label: ddk.recipe::lang.recipe.published_at
+            span: right
+            type: datepicker
+            mode: datetime

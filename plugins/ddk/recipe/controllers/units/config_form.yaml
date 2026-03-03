@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Unit
+form: ~/plugins/ddk/recipe/models/unit/fields.yaml
+modelClass: Ddk\Recipe\Models\Unit
+defaultRedirect: ddk/recipe/units
+
+create:
+    redirect: ddk/recipe/units/update/:id
+    redirectClose: ddk/recipe/units
+
+update:
+    redirect: ddk/recipe/units
+    redirectClose: ddk/recipe/units

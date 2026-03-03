@@ -14,16 +14,19 @@
 
             <!-- Search Bar - Center (Hidden on small mobile, visible from sm up) -->
             <div class="hidden sm:flex flex-1 max-w-md mx-4 lg:mx-8">
-                <div class="relative w-full">
+                <form action="/rezepte" method="GET" class="relative w-full">
                     <input 
                         type="text" 
+                        name="q"
                         placeholder="Rezept suchen..." 
                         class="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-warm-gray/50 placeholder-text-muted transition-all"
                     >
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
+                    <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </form>
             </div>
 
             <!-- Desktop Navigation -->
@@ -60,16 +63,19 @@
 
     <!-- Mobile Search Overlay (for xs screens) -->
     <div id="mobile-search-overlay" class="hidden sm:hidden bg-white border-t border-gray-100 px-4 py-3">
-        <div class="relative">
+        <form action="/rezepte" method="GET" class="relative">
             <input 
                 type="text" 
+                name="q"
                 placeholder="Rezept suchen..." 
                 class="w-full pl-10 pr-4 py-3 rounded-full border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-base bg-warm-gray/50 placeholder-text-muted"
             >
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-        </div>
+            <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+        </form>
     </div>
 
     <!-- Mobile Menu -->

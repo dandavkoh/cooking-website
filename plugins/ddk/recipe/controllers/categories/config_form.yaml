@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Category
+form: ~/plugins/ddk/recipe/models/category/fields.yaml
+modelClass: Ddk\Recipe\Models\Category
+defaultRedirect: ddk/recipe/categories
+
+create:
+    redirect: ddk/recipe/categories/update/:id
+    redirectClose: ddk/recipe/categories
+
+update:
+    redirect: ddk/recipe/categories
+    redirectClose: ddk/recipe/categories

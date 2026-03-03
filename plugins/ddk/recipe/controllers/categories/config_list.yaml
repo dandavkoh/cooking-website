@@ -1,0 +1,21 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+list: ~/plugins/ddk/recipe/models/category/columns.yaml
+modelClass: Ddk\Recipe\Models\Category
+title: ddk.recipe::lang.recipe.categories
+recordUrl: ddk/recipe/categories/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 50
+showSetup: true
+showSorting: true
+defaultSort:
+    column: nest_left
+    direction: asc
+showCheckboxes: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

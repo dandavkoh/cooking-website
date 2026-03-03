@@ -1,0 +1,21 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+list: ~/plugins/ddk/recipe/models/unit/columns.yaml
+modelClass: Ddk\Recipe\Models\Unit
+title: ddk.recipe::lang.recipe.units
+recordUrl: ddk/recipe/units/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 25
+showSetup: true
+showSorting: true
+defaultSort:
+    column: title
+    direction: asc
+showCheckboxes: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

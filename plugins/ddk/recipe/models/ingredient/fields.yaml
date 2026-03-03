@@ -1,0 +1,10 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: ddk.recipe::lang.recipe.title
+        span: full
+        type: text
+        required: true

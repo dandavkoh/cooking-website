@@ -1,0 +1,30 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: ddk.recipe::lang.recipe.title
+        span: left
+        type: text
+        required: true
+
+    slug:
+        label: ddk.recipe::lang.recipe.slug
+        span: right
+        type: text
+        preset:
+            field: title
+            type: slug
+
+    parent_id:
+        label: ddk.recipe::lang.recipe.parent_category
+        span: left
+        type: dropdown
+        emptyOption: ddk.recipe::lang.recipe.no_parent
+
+    sort_order:
+        label: ddk.recipe::lang.recipe.sort_order
+        span: right
+        type: number
+        default: 0

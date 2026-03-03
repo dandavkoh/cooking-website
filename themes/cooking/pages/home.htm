@@ -1,7 +1,10 @@
 title = "Home"
 url = "/"
 layout = "default"
+
+[featuredRecipes]
 ==
+{% set difficultyLabels = {'easy': 'Einfach', 'medium': 'Mittel', 'hard': 'Schwer'} %}
 <!-- Hero Section -->
 <section class="relative min-h-[85vh] md:min-h-screen overflow-hidden bg-charcoal">
     <!-- Background Image -->
@@ -102,179 +105,21 @@ layout = "default"
         <!-- Recipe Carousel -->
         <div class="recipe-carousel relative">
             <div class="recipe-carousel-track flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" style="-webkit-overflow-scrolling: touch;">
-                <!-- Recipe Card 1 -->
+                {% for recipe in featuredRecipes %}
                 <article class="recipe-card flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] snap-start group">
-                    <a href="/rezept/spaghetti-carbonara" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                    <a href="/rezept/{{ recipe.slug }}" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
                         <div class="relative h-48 md:h-52 overflow-hidden">
+                            {% if recipe.images.first %}
                             <img 
-                                src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=640&q=80" 
-                                alt="Spaghetti Carbonara" 
+                                src="{{ recipe.images.first.path }}" 
+                                alt="{{ recipe.title }}" 
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             >
-                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="text-xs font-medium text-charcoal">4.8</span>
+                            {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                                <span class="text-4xl">🍽️</span>
                             </div>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                                Spaghetti Carbonara
-                            </h3>
-                            <p class="text-text-muted text-sm line-clamp-2 mb-3">
-                                Cremige italienische Pasta mit knusprigem Guanciale und Pecorino Romano
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-text-muted">
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    30 Min
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                    Einfach
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Recipe Card 2 -->
-                <article class="recipe-card flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] snap-start group">
-                    <a href="/rezept/thai-curry" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                        <div class="relative h-48 md:h-52 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=640&q=80" 
-                                alt="Thai Curry" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            >
-                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="text-xs font-medium text-charcoal">4.6</span>
-                            </div>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                                Thai Kokos-Curry
-                            </h3>
-                            <p class="text-text-muted text-sm line-clamp-2 mb-3">
-                                Aromatisches Curry mit frischem Gemüse, Kokosmilch und Thai-Basilikum
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-text-muted">
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    45 Min
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                    Mittel
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Recipe Card 3 -->
-                <article class="recipe-card flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] snap-start group">
-                    <a href="/rezept/schoko-lava-kuchen" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                        <div class="relative h-48 md:h-52 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=640&q=80" 
-                                alt="Schoko Lava Kuchen" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            >
-                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="text-xs font-medium text-charcoal">4.9</span>
-                            </div>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                                Schoko Lava Kuchen
-                            </h3>
-                            <p class="text-text-muted text-sm line-clamp-2 mb-3">
-                                Verführerisches Dessert mit flüssigem Schokoladenkern – perfekt für Genießer
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-text-muted">
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    25 Min
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                    Mittel
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Recipe Card 4 -->
-                <article class="recipe-card flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] snap-start group">
-                    <a href="/rezept/avocado-lachs-bowl" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                        <div class="relative h-48 md:h-52 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=640&q=80" 
-                                alt="Avocado Lachs Bowl" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            >
-                            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="text-xs font-medium text-charcoal">4.7</span>
-                            </div>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                                Avocado Lachs Bowl
-                            </h3>
-                            <p class="text-text-muted text-sm line-clamp-2 mb-3">
-                                Gesunde Bowl mit frischem Lachs, cremiger Avocado und knackigem Gemüse
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-text-muted">
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    20 Min
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                    Einfach
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Recipe Card 5 -->
-                <article class="recipe-card flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] snap-start group">
-                    <a href="/rezept/ratatouille" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                        <div class="relative h-48 md:h-52 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?w=640&q=80" 
-                                alt="Ratatouille" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            >
+                            {% endif %}
                             <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
                                 <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
@@ -284,28 +129,29 @@ layout = "default"
                         </div>
                         <div class="p-4 md:p-5">
                             <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                                Ratatouille Provençale
+                                {{ recipe.title }}
                             </h3>
                             <p class="text-text-muted text-sm line-clamp-2 mb-3">
-                                Klassisches französisches Gemüsegericht mit Zucchini, Aubergine und Tomaten
+                                {{ recipe.subtitle ?: recipe.description|striptags|slice(0, 80) ~ '...' }}
                             </p>
                             <div class="flex items-center gap-4 text-xs text-text-muted">
                                 <span class="flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    60 Min
+                                    {{ recipe.total_time }} Min
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                     </svg>
-                                    Mittel
+                                    {{ difficultyLabels[recipe.difficulty] }}
                                 </span>
                             </div>
                         </div>
                     </a>
                 </article>
+                {% endfor %}
             </div>
         </div>
     </div>

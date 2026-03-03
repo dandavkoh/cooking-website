@@ -1,0 +1,25 @@
+# ===================================
+#  Filter Behavior Config
+# ===================================
+
+scopes:
+    is_published:
+        label: ddk.recipe::lang.recipe.is_published
+        type: switch
+        conditions: is_published = :filtered
+
+    difficulty:
+        label: ddk.recipe::lang.recipe.difficulty
+        type: dropdown
+        options:
+            easy: ddk.recipe::lang.recipe.difficulty_easy
+            medium: ddk.recipe::lang.recipe.difficulty_medium
+            hard: ddk.recipe::lang.recipe.difficulty_hard
+        conditions: difficulty = :filtered
+
+    categories:
+        label: ddk.recipe::lang.recipe.categories
+        type: group
+        modelClass: Ddk\Recipe\Models\Category
+        nameFrom: title
+        conditions: id in (select recipe_id from ddk_recipe_categories_map where category_id in (:filtered))

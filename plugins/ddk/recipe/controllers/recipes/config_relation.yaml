@@ -1,0 +1,19 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+categories:
+    label: ddk.recipe::lang.recipe.categories
+    view:
+        list: ~/plugins/ddk/recipe/models/category/columns.yaml
+    manage:
+        list: ~/plugins/ddk/recipe/models/category/columns.yaml
+        form: ~/plugins/ddk/recipe/models/category/fields.yaml
+
+images:
+    label: ddk.recipe::lang.recipe.images
+    view:
+        list:
+            columns:
+                id:
+                    label: ID
