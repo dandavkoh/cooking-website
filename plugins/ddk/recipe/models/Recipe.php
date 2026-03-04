@@ -4,6 +4,7 @@ namespace Ddk\Recipe\Models;
 
 use Winter\Storm\Database\Model;
 use Winter\Storm\Support\Str;
+use Winter\User\Models\User;
 
 class Recipe extends Model
 {
@@ -154,5 +155,22 @@ class Recipe extends Model
     public function getUnitIdOptions()
     {
         return ['' => '-- ' . trans('ddk.recipe::lang.recipe.no_entry') . ' --'] + Unit::orderBy('title')->pluck('title', 'id')->toArray();
+    }
+
+    /**
+     * Get author options for dropdown - only users from 'recipe' group
+     */
+    public function getAuthorIdOptions()
+    {
+        return ['' => '-- ' . trans('ddk.recipe::lang.recipe.no_entry') . ' --'] +
+            User::whereHas('groups', function ($query) {
+                $query->where('code', 'recipe');
+            })
+            ->orderBy('name')
+            ->get()
+            ->mapWithKeys(function ($user) {
+                return [$user->id => $user->name . ' (' . $user->email . ')'];
+            })
+            ->toArray();
     }
 }

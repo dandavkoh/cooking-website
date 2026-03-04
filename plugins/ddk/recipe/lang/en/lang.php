@@ -28,6 +28,7 @@ return [
         'working_time' => 'Working time (minutes)',
         'cooking_time' => 'Cooking time (minutes)',
         'author' => 'Author',
+        'select_author' => 'Select author',
         'is_published' => 'Published',
         'published_at' => 'Published at',
         'created_at' => 'Created at',

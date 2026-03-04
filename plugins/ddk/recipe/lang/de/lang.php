@@ -28,6 +28,7 @@ return [
         'working_time' => 'Arbeitszeit (Minuten)',
         'cooking_time' => 'Kochzeit (Minuten)',
         'author' => 'Autor',
+        'select_author' => 'Autor auswählen',
         'is_published' => 'Veröffentlicht',
         'published_at' => 'Veröffentlicht am',
         'created_at' => 'Erstellt am',

@@ -118,6 +118,13 @@ tabs:
             imageHeight: 200
             useCaption: true
 
+        author_id:
+            tab: Settings
+            label: ddk.recipe::lang.recipe.author
+            span: full
+            type: dropdown
+            placeholder: ddk.recipe::lang.recipe.select_author
+
         is_published:
             tab: Settings
             label: ddk.recipe::lang.recipe.is_published

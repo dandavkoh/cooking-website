@@ -172,9 +172,7 @@ slug = "{{ :slug }}"
                         </li>
                         {% endfor %}
                     </ul>
-                        <li class="flex items-start gap-3 pb-3 border-b border-gray-100">
-                            <input type="checkbox" class="mt-1 w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer">
-                            <span class="flex-1">
+
                     <!-- Add to Shopping List -->
                     <button class="w-full mt-6 flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white py-3 rounded-xl font-medium transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -224,15 +222,17 @@ slug = "{{ :slug }}"
                 <!-- Author & Rating Section -->
                 <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm mt-8">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        {% if recipe.author %}
                         <div class="flex items-center gap-4">
                             <div class="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-xl">
-                                MK
+                                {{ recipe.author.name|first|upper }}{{ recipe.author.surname|first|upper }}
                             </div>
                             <div>
-                                <p class="font-semibold text-charcoal">Marco Kowalski</p>
+                                <p class="font-semibold text-charcoal">{{ recipe.author.name }} {{ recipe.author.surname }}</p>
                                 <p class="text-sm text-text-muted">Koch & Rezeptautor</p>
                             </div>
                         </div>
+                        {% endif %}
                         <div class="flex items-center gap-3">
                             <span class="text-sm text-text-muted">Hat dir das Rezept geschmeckt?</span>
                             <button class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
