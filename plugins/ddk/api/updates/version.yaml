@@ -1,0 +1,3 @@
+v1.0.0:
+    - 'Initial version of the API plugin'
+    - add_api_token_to_backend_users.php
