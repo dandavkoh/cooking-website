@@ -19,6 +19,8 @@ return [
         'title' => 'Title',
         'subtitle' => 'Subtitle',
         'slug' => 'Slug',
+        'public_id' => 'Public ID',
+        'public_id_comment' => 'Auto-generated and used for unique URLs',
         'description' => 'Description',
         'portions' => 'Portions',
         'difficulty' => 'Difficulty',

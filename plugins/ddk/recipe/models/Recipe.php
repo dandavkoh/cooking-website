@@ -14,7 +14,8 @@ class Recipe extends Model
 
     public $rules = [
         'title' => 'required|max:255',
-        'slug' => 'required|max:255|unique:ddk_recipes',
+        'slug' => 'required|max:255',
+        'public_id' => 'required|max:16|unique:ddk_recipes',
         'portions' => 'nullable|integer|min:1',
         'difficulty' => 'required|in:easy,medium,hard',
         'working_time_minutes' => 'nullable|integer|min:0',
@@ -24,6 +25,7 @@ class Recipe extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
+        'public_id',
         'title',
         'slug',
         'subtitle',
@@ -74,9 +76,32 @@ class Recipe extends Model
 
     public function beforeValidate()
     {
+        // Auto-generate public_id (Snowflake-like: timestamp in microseconds)
+        if (!$this->exists && !$this->public_id) {
+            $this->public_id = $this->generatePublicId();
+        }
+
+        // Auto-generate slug from title
         if (!$this->exists && !$this->slug) {
             $this->slug = Str::slug($this->title);
         }
+    }
+
+    /**
+     * Generate a unique public ID (16 digits, Snowflake-like)
+     * Format: Timestamp in milliseconds (13 digits) + random (3 digits)
+     */
+    public static function generatePublicId(): string
+    {
+        return sprintf('%013d%03d', floor(microtime(true) * 1000), random_int(0, 999));
+    }
+
+    /**
+     * Get the URL for this recipe
+     */
+    public function getUrlAttribute(): string
+    {
+        return '/rezept/' . $this->public_id . '/' . $this->slug;
     }
 
     /**

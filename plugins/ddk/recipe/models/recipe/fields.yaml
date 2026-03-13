@@ -9,9 +9,16 @@ fields:
         type: text
         required: true
 
+    public_id:
+        label: ddk.recipe::lang.recipe.public_id
+        span: right
+        type: text
+        disabled: true
+        comment: ddk.recipe::lang.recipe.public_id_comment
+
     slug:
         label: ddk.recipe::lang.recipe.slug
-        span: right
+        span: left
         type: text
         preset:
             field: title
@@ -19,7 +26,7 @@ fields:
 
     subtitle:
         label: ddk.recipe::lang.recipe.subtitle
-        span: full
+        span: right
         type: text
 
 tabs:

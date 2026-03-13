@@ -28,9 +28,15 @@ class RecipeDetail extends ComponentBase
     public function defineProperties()
     {
         return [
+            'publicId' => [
+                'title' => 'Recipe Public ID',
+                'description' => 'The unique public ID of the recipe',
+                'default' => '{{ :public_id }}',
+                'type' => 'string',
+            ],
             'slug' => [
                 'title' => 'Recipe Slug',
-                'description' => 'The URL slug of the recipe',
+                'description' => 'The URL slug of the recipe (for SEO)',
                 'default' => '{{ :slug }}',
                 'type' => 'string',
             ],
@@ -70,13 +76,13 @@ class RecipeDetail extends ComponentBase
     }
 
     /**
-     * Load the recipe by slug with all relations
+     * Load the recipe by public_id with all relations
      */
     protected function loadRecipe()
     {
-        $slug = $this->property('slug');
+        $publicId = $this->property('publicId');
 
-        if (!$slug) {
+        if (!$publicId) {
             return null;
         }
 
@@ -89,7 +95,7 @@ class RecipeDetail extends ComponentBase
             'author',
         ])
             ->isPublished()
-            ->where('slug', $slug)
+            ->where('public_id', $publicId)
             ->first();
     }
 

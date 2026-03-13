@@ -43,8 +43,9 @@ class CreateTables extends Migration
         Schema::create('ddk_recipes', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('public_id', 16)->unique()->index();
             $table->string('title');
-            $table->string('slug')->unique()->index();
+            $table->string('slug')->index();
             $table->string('subtitle')->nullable();
             $table->text('description')->nullable();
             $table->integer('portions')->nullable();

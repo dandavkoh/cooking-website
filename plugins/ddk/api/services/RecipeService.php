@@ -46,8 +46,8 @@ class RecipeService
     {
         try {
             return DB::transaction(function () use ($data) {
-                // 1. Generate unique slug
-                $slug = $this->generateUniqueSlug($data['slug'] ?? null, $data['title']);
+                // 1. Generate slug (not unique, public_id handles uniqueness)
+                $slug = $this->generateSlug($data['slug'] ?? null, $data['title']);
 
                 // 2. Map difficulty from number to string
                 $difficulty = RecipeStoreRequest::mapDifficulty($data['difficulty']);
@@ -106,23 +106,13 @@ class RecipeService
     }
 
     /**
-     * Generate a unique slug
+     * Generate a slug from title
      *
-     * If a slug is provided, ensures it's unique by appending numbers.
-     * If no slug is provided, generates one from the title.
+     * Slug does not need to be unique since public_id is used for identification.
      */
-    protected function generateUniqueSlug(?string $providedSlug, string $title): string
+    protected function generateSlug(?string $providedSlug, string $title): string
     {
-        $baseSlug = $providedSlug ? Str::slug($providedSlug) : Str::slug($title);
-        $slug = $baseSlug;
-        $counter = 1;
-
-        while (Recipe::where('slug', $slug)->exists()) {
-            $slug = $baseSlug . '-' . $counter;
-            $counter++;
-        }
-
-        return $slug;
+        return $providedSlug ? Str::slug($providedSlug) : Str::slug($title);
     }
 
     /**
@@ -303,6 +293,8 @@ class RecipeService
     {
         return [
             'id' => $recipe->id,
+            'public_id' => $recipe->public_id,
+            'url' => $recipe->url,
             'title' => $recipe->title,
             'slug' => $recipe->slug,
             'subtitle' => $recipe->subtitle,

@@ -1,8 +1,9 @@
 title = "Rezept Detail"
-url = "/rezept/:slug"
+url = "/rezept/:public_id/:slug?"
 layout = "default"
 
 [recipeDetail]
+publicId = "{{ :public_id }}"
 slug = "{{ :slug }}"
 ==
 <!-- Recipe Hero -->
@@ -259,7 +260,7 @@ slug = "{{ :slug }}"
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {% for related in relatedRecipes %}
             <article class="group">
-                <a href="/rezept/{{ related.slug }}" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
+                <a href="{{ related.url }}" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
                     <div class="relative h-40 overflow-hidden">
                         <img 
                             src="{% if related.images.first %}{{ related.images.first.path }}{% else %}https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=400&q=80{% endif %}" 
