@@ -31,6 +31,13 @@ tabs:
             type: richeditor
             size: large
 
+        tip:
+            tab: Details
+            label: ddk.recipe::lang.recipe.tip
+            type: textarea
+            size: small
+            comment: ddk.recipe::lang.recipe.tip_comment
+
         portions:
             tab: Details
             label: ddk.recipe::lang.recipe.portions

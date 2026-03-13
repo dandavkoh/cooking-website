@@ -54,6 +54,7 @@ class CreateTables extends Migration
             $table->integer('author_id')->unsigned()->nullable()->index();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
+            $table->text('tip')->nullable();
             $table->timestamps();
         });
 

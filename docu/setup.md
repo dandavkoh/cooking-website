@@ -372,7 +372,7 @@ php artisan plugin:refresh Author.PluginName
 Example:
 
 ```bash
-php artisan plugin:refresh Ddk.Recipes
+php artisan plugin:refresh Ddk.Recipe
 ```
 
 ---

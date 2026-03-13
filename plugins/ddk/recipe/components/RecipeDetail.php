@@ -12,6 +12,11 @@ class RecipeDetail extends ComponentBase
      */
     public $recipe;
 
+    /**
+     * Related recipes
+     */
+    public $relatedRecipes;
+
     public function componentDetails()
     {
         return [
@@ -42,6 +47,26 @@ class RecipeDetail extends ComponentBase
         }
 
         $this->page->title = $this->recipe->title;
+
+        // Load related recipes
+        $this->relatedRecipes = $this->page['relatedRecipes'] = $this->loadRelatedRecipes();
+    }
+
+    /**
+     * Load random related recipes (max 4, excluding current recipe)
+     */
+    protected function loadRelatedRecipes()
+    {
+        if (!$this->recipe) {
+            return collect([]);
+        }
+
+        return Recipe::with(['images'])
+            ->isPublished()
+            ->where('id', '!=', $this->recipe->id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
     }
 
     /**

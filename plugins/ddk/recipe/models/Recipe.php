@@ -35,6 +35,7 @@ class Recipe extends Model
         'author_id',
         'is_published',
         'published_at',
+        'tip',
     ];
 
     protected $dates = ['published_at'];

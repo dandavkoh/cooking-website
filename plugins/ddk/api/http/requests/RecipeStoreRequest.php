@@ -67,6 +67,7 @@ class RecipeStoreRequest extends BaseRequest
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'tip' => 'nullable|string',
             'slug' => 'nullable|string|max:255',
             'portions' => 'nullable|integer|min:1',
             'difficulty' => 'required|integer|in:1,2,3',

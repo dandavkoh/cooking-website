@@ -27,6 +27,8 @@ return [
         'difficulty_hard' => 'Schwer',
         'working_time' => 'Arbeitszeit (Minuten)',
         'cooking_time' => 'Kochzeit (Minuten)',
+        'tip' => 'Profi-Tipp',
+        'tip_comment' => 'Ein hilfreicher Tipp für die Zubereitung',
         'author' => 'Autor',
         'select_author' => 'Autor auswählen',
         'is_published' => 'Veröffentlicht',

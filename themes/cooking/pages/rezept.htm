@@ -208,15 +208,17 @@ slug = "{{ :slug }}"
                     </div>
 
                     <!-- Tips Section -->
+                    {% if recipe.tip %}
                     <div class="mt-10 p-6 bg-accent/10 rounded-xl border border-accent/20">
                         <h3 class="flex items-center gap-2 font-semibold text-charcoal mb-3">
                             <span class="text-xl">💡</span>
                             Profi-Tipp
                         </h3>
                         <p class="text-text-muted text-sm leading-relaxed">
-                            Der wichtigste Moment ist das Verbinden von Pasta und Ei-Mischung. Die Pfanne muss vom Herd sein, damit die Eier nicht gerinnen! Rühre schnell und kontinuierlich. Wenn die Sauce zu dick wird, füge löffelweise Nudelwasser hinzu. Wenn sie zu flüssig ist, schwenke die Pfanne bei sehr niedriger Hitze, bis die gewünschte Konsistenz erreicht ist.
+                            {{ recipe.tip }}
                         </p>
                     </div>
+                    {% endif %}
                 </div>
 
                 <!-- Author & Rating Section -->
@@ -247,6 +249,7 @@ slug = "{{ :slug }}"
 </section>
 
 <!-- Related Recipes -->
+{% if relatedRecipes|length > 0 %}
 <section class="py-10 md:py-14 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl md:text-3xl font-display font-bold text-charcoal mb-8">
@@ -254,100 +257,33 @@ slug = "{{ :slug }}"
         </h2>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <!-- Related Recipe 1 -->
+            {% for related in relatedRecipes %}
             <article class="group">
-                <a href="/rezept/aglio-olio" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
+                <a href="/rezept/{{ related.slug }}" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
                     <div class="relative h-40 overflow-hidden">
                         <img 
-                            src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&q=80" 
-                            alt="Spaghetti Aglio e Olio" 
+                            src="{% if related.images.first %}{{ related.images.first.path }}{% else %}https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=400&q=80{% endif %}" 
+                            alt="{{ related.title }}" 
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         >
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Spaghetti Aglio e Olio
+                            {{ related.title }}
                         </h3>
                         <div class="flex items-center gap-3 text-xs text-text-muted">
-                            <span>20 Min</span>
+                            <span>{{ related.total_time }} Min</span>
                             <span>•</span>
-                            <span>Einfach</span>
+                            <span>{% if related.difficulty == 'easy' %}Einfach{% elseif related.difficulty == 'medium' %}Mittel{% else %}Schwer{% endif %}</span>
                         </div>
                     </div>
                 </a>
             </article>
-
-            <!-- Related Recipe 2 -->
-            <article class="group">
-                <a href="/rezept/cacio-e-pepe" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-40 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1608219992759-8d74ed8d76eb?w=400&q=80" 
-                            alt="Cacio e Pepe" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Cacio e Pepe
-                        </h3>
-                        <div class="flex items-center gap-3 text-xs text-text-muted">
-                            <span>25 Min</span>
-                            <span>•</span>
-                            <span>Mittel</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Related Recipe 3 -->
-            <article class="group">
-                <a href="/rezept/amatriciana" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-40 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" 
-                            alt="Pasta all'Amatriciana" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Pasta all'Amatriciana
-                        </h3>
-                        <div class="flex items-center gap-3 text-xs text-text-muted">
-                            <span>35 Min</span>
-                            <span>•</span>
-                            <span>Einfach</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Related Recipe 4 -->
-            <article class="group">
-                <a href="/rezept/bolognese" class="block bg-cream rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-40 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80" 
-                            alt="Spaghetti Bolognese" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Spaghetti Bolognese
-                        </h3>
-                        <div class="flex items-center gap-3 text-xs text-text-muted">
-                            <span>90 Min</span>
-                            <span>•</span>
-                            <span>Mittel</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -27,6 +27,8 @@ return [
         'difficulty_hard' => 'Hard',
         'working_time' => 'Working time (minutes)',
         'cooking_time' => 'Cooking time (minutes)',
+        'tip' => 'Pro tip',
+        'tip_comment' => 'A helpful tip for preparation',
         'author' => 'Author',
         'select_author' => 'Select author',
         'is_published' => 'Published',
