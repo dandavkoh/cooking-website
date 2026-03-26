@@ -57,4 +57,11 @@ return [
         'delete' => 'Löschen',
         'delete_confirm' => 'Sind Sie sicher?',
     ],
+    'menuitem' => [
+        'recipe_category' => 'Rezept-Kategorie',
+        'all_recipe_categories' => 'Alle Rezept-Kategorien',
+        'recipe_post' => 'Rezept',
+        'all_recipe_posts' => 'Alle Rezepte',
+        'category_recipe_posts' => 'Rezepte in Kategorie',
+    ],
 ];

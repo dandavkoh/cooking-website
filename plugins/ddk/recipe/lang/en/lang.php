@@ -57,4 +57,11 @@ return [
         'delete' => 'Delete',
         'delete_confirm' => 'Are you sure?',
     ],
+    'menuitem' => [
+        'recipe_category' => 'Recipe category',
+        'all_recipe_categories' => 'All recipe categories',
+        'recipe_post' => 'Recipe post',
+        'all_recipe_posts' => 'All recipes',
+        'category_recipe_posts' => 'Recipes in category',
+    ],
 ];

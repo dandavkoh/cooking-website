@@ -5,6 +5,9 @@ namespace Ddk\Recipe\Models;
 use Winter\Storm\Database\Model;
 use Winter\Storm\Support\Str;
 use Winter\User\Models\User;
+use Cms\Classes\Page as CmsPage;
+use Cms\Classes\Theme;
+use Winter\Storm\Support\Facades\Url;
 
 class Recipe extends Model
 {
@@ -198,5 +201,203 @@ class Recipe extends Model
                 return [$user->id => $user->name . ' (' . $user->email . ')'];
             })
             ->toArray();
+    }
+
+    /**
+     * Returns a list of menu item types compatible with the Sitemap menu
+     * Returns null if the type is not supported
+     */
+    public static function getMenuTypeInfo($type): array
+    {
+        $result = [];
+        
+        if ($type == 'recipe-post') {
+            $references = [];
+            $recipes = self::isPublished()->orderBy('title')->get();
+            foreach ($recipes as $recipe) {
+                $references[$recipe->id] = $recipe->title;
+            }
+            
+            $result = [
+                'references' => $references,
+                'nesting' => false,
+                'dynamicItems' => false,
+            ];
+        }
+        
+        if ($type == 'all-recipe-posts') {
+            $result = [
+                'dynamicItems' => true,
+            ];
+        }
+        
+        if ($type == 'category-recipe-posts') {
+            $references = [];
+            $categories = Category::orderBy('title')->get();
+            foreach ($categories as $category) {
+                $references[$category->id] = $category->title;
+            }
+            
+            $result = [
+                'references' => $references,
+                'dynamicItems' => true,
+            ];
+        }
+        
+        if ($result) {
+            $result['cmsPages'] = self::getCmsPageOptions();
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Fetches the dynamic menu items (like all recipes or recipes in a category)
+     * from the models and returns them as a structured array for the Sitemap
+     */
+    public static function resolveMenuItem($item, $url, $theme, ?int $referenceKey = null): ?array
+    {
+        $result = null;
+
+        if (!class_exists(CmsPage::class) || !class_exists(Theme::class)) {
+            return $result;
+        }
+
+        if ($item->type == 'recipe-post') {
+            if (!$item->reference) {
+                return null;
+            }
+
+            $recipe = self::isPublished()->find($item->reference);
+            if (!$recipe) {
+                return null;
+            }
+
+            $pageUrl = self::getLocalizedUrl($recipe, $item->cmsPage);
+            if (!$pageUrl) {
+                return null;
+            }
+
+            $pageUrl = Url::to($pageUrl);
+            $result = [
+                'url' => $pageUrl,
+                'isActive' => $pageUrl === $url,
+                'mtime' => $recipe->updated_at,
+            ];
+        } elseif ($item->type == 'all-recipe-posts') {
+            $result = [
+                'items' => [],
+            ];
+
+            $recipes = self::isPublished()->orderBy('title')->get();
+            foreach ($recipes as $recipe) {
+                $recipeItem = [
+                    'title' => $recipe->title,
+                    'url' => Url::to($recipe->url),
+                    'mtime' => $recipe->updated_at,
+                ];
+
+                $recipeItem['isActive'] = $recipeItem['url'] === $url;
+                
+                $result['items'][] = $recipeItem;
+            }
+        } elseif ($item->type == 'category-recipe-posts') {
+            if (!$item->reference) {
+                return null;
+            }
+
+            $category = Category::find($item->reference);
+            if (!$category) {
+                return null;
+            }
+
+            $result = [
+                'items' => [],
+            ];
+
+            $recipes = $category->recipes()->isPublished()->orderBy('title')->get();
+            foreach ($recipes as $recipe) {
+                $recipeItem = [
+                    'title' => $recipe->title,
+                    'url' => Url::to($recipe->url),
+                    'mtime' => $recipe->updated_at,
+                ];
+
+                $recipeItem['isActive'] = $recipeItem['url'] === $url;
+                
+                $result['items'][] = $recipeItem;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Helper method to find CMS pages that display recipes
+     * similar to how Blog plugin does it
+     */
+    protected static function getCmsPageOptions(): array
+    {
+        if (!class_exists(CmsPage::class) || !class_exists(Theme::class)) {
+            return [];
+        }
+
+        $theme = Theme::getActiveTheme();
+        $pages = CmsPage::listInTheme($theme, true);
+        
+        $cmsPages = [];
+        foreach ($pages as $page) {
+            if (!$page->hasComponent('recipeDetail') && !$page->hasComponent('recipeList')) {
+                continue;
+            }
+
+            $cmsPages[] = $page;
+        }
+
+        return $cmsPages;
+    }
+
+    /**
+     * Generates a URL for a specific recipe on a customised recipe page
+     * This is similar to the blog post URL generation
+     */
+    protected static function getLocalizedUrl($recipe, $cmsPage): ?string
+    {
+        if (!class_exists(CmsPage::class) || !class_exists(Theme::class)) {
+            return $recipe->url;
+        }
+
+        $page = CmsPage::loadCached(Theme::getActiveTheme(), $cmsPage);
+        if (!$page) {
+            return $recipe->url;
+        }
+
+        $properties = $page->getComponentProperties(\Ddk\Recipe\Components\RecipeDetail::class);
+        if (!isset($properties['publicId'])) {
+            return $recipe->url;
+        }
+
+        // Check if the published post page uses any routing parameters
+        if (!preg_match('/^.*{{\s*publicId\s*}}.*$/', $properties['publicId'])) {
+            return $recipe->url;
+        }
+
+        // Extract the routing parameter name from the filter
+        // The format is "{{ :public_id }}"
+        $matches = [];
+        $pattern = '|^.*{{\s*:([^\}]+)\s*}}.*$|i';
+        if (!preg_match($pattern, $properties['publicId'], $matches)) {
+            return $recipe->url;
+        }
+
+        if (!isset($matches[1])) {
+            return $recipe->url;
+        }
+
+        $paramName = trim($matches[1], "'");
+        
+        $url = CmsPage::url($page->getFileName(), [$paramName => $recipe->public_id]);
+        
+        return $url ?: $recipe->url;
     }
 }

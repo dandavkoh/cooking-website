@@ -5,6 +5,9 @@ namespace Ddk\Recipe;
 use Backend\Facades\Backend;
 use Backend\Models\UserRole;
 use System\Classes\PluginBase;
+use Ddk\Recipe\Models\Category;
+use Ddk\Recipe\Models\Recipe;
+use Winter\Storm\Support\Facades\Event;
 
 class Plugin extends PluginBase
 {
@@ -104,5 +107,56 @@ class Plugin extends PluginBase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Boot method, called when the plugin is first booted.
+     */
+    public function boot(): void
+    {
+        $this->extendWinterPagesPlugin();
+    }
+
+    /**
+     * Extends the Winter.Pages plugin
+     */
+    protected function extendWinterPagesPlugin(): void
+    {
+        /*
+         * Register menu items for the Winter.Pages plugin
+         */
+        Event::listen('pages.menuitem.listTypes', function () {
+            return [
+                'recipe-category' => 'ddk.recipe::lang.menuitem.recipe_category',
+                'all-recipe-categories' => 'ddk.recipe::lang.menuitem.all_recipe_categories',
+                'recipe-post' => 'ddk.recipe::lang.menuitem.recipe_post',
+                'all-recipe-posts' => 'ddk.recipe::lang.menuitem.all_recipe_posts',
+                'category-recipe-posts' => 'ddk.recipe::lang.menuitem.category_recipe_posts',
+            ];
+        });
+
+        Event::listen('pages.menuitem.getTypeInfo', function ($type) {
+            switch ($type) {
+                case 'recipe-category':
+                case 'all-recipe-categories':
+                    return Category::getMenuTypeInfo($type);
+                case 'recipe-post':
+                case 'all-recipe-posts':
+                case 'category-recipe-posts':
+                    return Recipe::getMenuTypeInfo($type);
+            }
+        });
+
+        Event::listen('pages.menuitem.resolveItem', function ($type, $item, $url, $theme) {
+            switch ($type) {
+                case 'recipe-category':
+                case 'all-recipe-categories':
+                    return Category::resolveMenuItem($item, $url, $theme);
+                case 'recipe-post':
+                case 'all-recipe-posts':
+                case 'category-recipe-posts':
+                    return Recipe::resolveMenuItem($item, $url, $theme);
+            }
+        });
     }
 }
