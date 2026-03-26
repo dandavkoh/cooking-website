@@ -3,6 +3,12 @@ url = "/"
 layout = "default"
 
 [featuredRecipes]
+
+[blogPosts latestPosts]
+sortOrder = "published_at desc"
+pageNumber = "1"
+postsPerPage = "5"
+postPage = "blog-article"
 ==
 {% set difficultyLabels = {'easy': 'Einfach', 'medium': 'Mittel', 'hard': 'Schwer'} %}
 <!-- Hero Section -->
@@ -223,172 +229,125 @@ layout = "default"
 
 <!-- Blog Section -->
 <section class="py-12 md:py-20 bg-warm-gray">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 md:mb-12">
-            <div>
-                <h2 class="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-charcoal mb-2">
-                    Aus dem Blog
-                </h2>
-                <p class="text-text-muted text-sm md:text-base">
-                    Tipps, Tricks und Geschichten rund ums Kochen
-                </p>
-            </div>
-            <a href="/blog" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm transition-colors">
-                Alle Artikel
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </a>
-        </div>
-
-        <!-- Blog Cards Grid -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- Blog Card 1 -->
-            <article class="group">
-                <a href="/blog/artikel/perfekte-pasta-kochen" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-48 md:h-56 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=640&q=80" 
-                            alt="Perfekte Pasta kochen" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                        <div class="absolute top-3 left-3">
-                            <span class="bg-secondary text-white text-xs font-medium px-3 py-1 rounded-full">
-                                Kochtipps
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5 md:p-6">
-                        <div class="flex items-center gap-3 text-xs text-text-muted mb-3">
-                            <span>28. Februar 2026</span>
-                            <span>•</span>
-                            <span>5 Min Lesezeit</span>
-                        </div>
-                        <h3 class="text-lg md:text-xl font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            So kochst du die perfekte Pasta
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2">
-                            Entdecke die Geheimnisse der italienischen Küche und lerne, wie du Pasta al dente zubereitest.
-                        </p>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Blog Card 2 -->
-            <article class="group">
-                <a href="/blog/artikel/saisonales-kochen-fruehling" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-48 md:h-56 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=640&q=80" 
-                            alt="Saisonales Kochen im Frühling" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                        <div class="absolute top-3 left-3">
-                            <span class="bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
-                                Saisonal
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5 md:p-6">
-                        <div class="flex items-center gap-3 text-xs text-text-muted mb-3">
-                            <span>25. Februar 2026</span>
-                            <span>•</span>
-                            <span>8 Min Lesezeit</span>
-                        </div>
-                        <h3 class="text-lg md:text-xl font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Saisonales Kochen: Der Frühling kommt!
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2">
-                            Die besten frischen Zutaten für die Frühlingsküche und wie du sie optimal verwendest.
-                        </p>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Blog Card 3 -->
-            <article class="group sm:col-span-2 lg:col-span-1">
-                <a href="/blog/artikel/meal-prep-guide" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
-                    <div class="relative h-48 md:h-56 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=640&q=80" 
-                            alt="Meal Prep Guide" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                        <div class="absolute top-3 left-3">
-                            <span class="bg-accent text-charcoal text-xs font-medium px-3 py-1 rounded-full">
-                                Meal Prep
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5 md:p-6">
-                        <div class="flex items-center gap-3 text-xs text-text-muted mb-3">
-                            <span>20. Februar 2026</span>
-                            <span>•</span>
-                            <span>10 Min Lesezeit</span>
-                        </div>
-                        <h3 class="text-lg md:text-xl font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Meal Prep: Dein Guide für die Woche
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2">
-                            Spare Zeit und esse gesünder mit unseren bewährten Meal-Prep-Strategien und Rezepten.
-                        </p>
-                    </div>
-                </a>
-            </article>
-        </div>
-
-        <!-- Additional Blog Cards (4 & 5) -->
-        <div class="grid sm:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8">
-            <!-- Blog Card 4 -->
-            <article class="group">
-                <a href="/blog/artikel/gewuerze-richtig-verwenden" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1 flex flex-col sm:flex-row">
-                    <div class="relative h-48 sm:h-auto sm:w-40 md:w-48 flex-shrink-0 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&q=80" 
-                            alt="Gewürze richtig verwenden" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5 flex-1">
-                        <div class="flex items-center gap-3 text-xs text-text-muted mb-2">
-                            <span class="bg-terracotta/20 text-terracotta px-2 py-0.5 rounded-full font-medium">Basics</span>
-                            <span>15. Februar 2026</span>
-                        </div>
-                        <h3 class="text-base md:text-lg font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Gewürze richtig verwenden
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2">
-                            Ein Guide zu den wichtigsten Gewürzen und wie sie deine Gerichte auf ein neues Level heben.
-                        </p>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Blog Card 5 -->
-            <article class="group">
-                <a href="/blog/artikel/vegane-alternativen" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1 flex flex-col sm:flex-row">
-                    <div class="relative h-48 sm:h-auto sm:w-40 md:w-48 flex-shrink-0 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1540914124281-342587941389?w=400&q=80" 
-                            alt="Vegane Alternativen" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5 flex-1">
-                        <div class="flex items-center gap-3 text-xs text-text-muted mb-2">
-                            <span class="bg-sage/20 text-secondary px-2 py-0.5 rounded-full font-medium">Vegan</span>
-                            <span>10. Februar 2026</span>
-                        </div>
-                        <h3 class="text-base md:text-lg font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
-                            Die besten veganen Alternativen
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2">
-                            Entdecke leckere pflanzliche Ersatzprodukte für Milch, Eier, Fleisch und mehr.
-                        </p>
-                    </div>
-                </a>
-            </article>
-        </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 md:mb-12">
+      <div>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-charcoal mb-2">
+          Aus dem Blog
+        </h2>
+        <p class="text-text-muted text-sm md:text-base">
+          Tipps, Tricks und Geschichten rund ums Kochen
+        </p>
+      </div>
+      <a href="/blog" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm transition-colors">
+        Alle Artikel
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
     </div>
+
+    {% if latestPosts.posts.count > 0 %}
+      <!-- Blog Cards Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {% for post in latestPosts.posts %}
+          {% if loop.index <= 3 %}
+            <article class="group">
+              <a href="{{ post.url }}" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                <div class="relative h-48 md:h-56 overflow-hidden">
+                  {% if post.featured_images.count > 0 %}
+                    <img
+                      src="{{ post.featured_images.first.getThumb(640, 430, 'crop') }}"
+                      alt="{{ post.title }}"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    >
+                  {% else %}
+                    {# <img
+                      src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=640&q=80"
+                      alt="Default featured image"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    > #}
+                  {% endif %}
+                  {% if post.categories.count > 0 %}
+                    <div class="absolute top-3 left-3">
+                      <span class="text-xs font-medium px-3 py-1 rounded-full {% if post.categories.first.name == 'Kochtipps' %}bg-secondary text-white{% elseif post.categories.first.name == 'Saisonal' %}bg-primary text-white{% else %}bg-accent text-charcoal{% endif %}">
+                        {{ post.categories.first.name }}
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="p-5 md:p-6">
+            <div class="flex items-center gap-3 text-xs text-text-muted mb-3">
+              <span>{{ post.published_at|date("d. F Y") }}</span>
+              <span>•</span>
+              <span>{% set readingMinutes = max(1, (post.content_html|striptags|split(" ")|length / 200)|round(0, "ceil")) %}{{ readingMinutes }} Min Lesezeit</span>
+            </div>
+                  <h3 class="text-lg md:text-xl font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
+                    {{ post.title }}
+                  </h3>
+                  <p class="text-text-muted text-sm line-clamp-2">
+                    {{ post.excerpt|raw }}
+                  </p>
+                </div>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Additional Blog Cards (4 & 5) -->
+      <div class="grid sm:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8">
+        {% for post in latestPosts.posts %}
+          {% if loop.index > 3 %}
+            <article class="group">
+              <a href="{{ post.url }}" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1 flex flex-col sm:flex-row">
+                <div class="relative h-48 sm:h-auto sm:w-40 md:w-48 flex-shrink-0 overflow-hidden">
+                  {% if post.featured_images.count > 0 %}
+                    <img
+                      src="{{ post.featured_images.first.getThumb(400, 267, 'crop') }}"
+                      alt="{{ post.title }}"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    >
+                  {% else %}
+                    {# <img
+                      src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80"
+                      alt="Default featured image"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    > #}
+                  {% endif %}
+                </div>
+                <div class="p-5 flex-1">
+                  <div class="flex items-center gap-3 text-xs text-text-muted mb-2">
+                    {% if post.categories.count > 0 %}
+                      <span class="{% if post.categories.first.name == 'Basics' %}bg-terracotta/20 text-terracotta{% elseif post.categories.first.name == 'Vegan' %}bg-sage/20 text-secondary{% endif %} px-2 py-0.5 rounded-full font-medium">
+                        {{ post.categories.first.name }}
+                      </span>
+                    {% endif %}
+                    <span>{{ post.published_at|date("d. F Y") }}</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-semibold text-charcoal mb-2 group-hover:text-primary transition-colors">
+                    {{ post.title }}
+                  </h3>
+                  <p class="text-text-muted text-sm line-clamp-2">
+                    {{ post.excerpt|raw }}
+                  </p>
+                </div>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- No Posts Found -->
+      <div class="text-center py-8">
+        <div class="text-4xl mb-4">✍️</div>
+        <h3 class="text-xl font-semibold text-charcoal mb-2">Noch keine Blog-Beiträge</h3>
+        <p class="text-text-muted mb-6">Schau später wieder vorbei, wir arbeiten an neuen Inhalten.</p>
+        <a href="/" class="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors">
+          Zurück zur Startseite
+        </a>
+      </div>
+    {% endif %}
+  </div>
 </section>

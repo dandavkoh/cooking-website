@@ -1,399 +1,247 @@
 title = "Blog"
-url = "/blog"
+url = "/blog/:page?/:category?"
 layout = "default"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+categoryPage = 404
+postPage = "blog-article"
+postsPerPage = 9
+sortOrder = "published_at desc"
+postFeatured = 0
 ==
+<?php
+use Winter\Blog\Models\Category;
+
+function onStart(){
+    $this['categories'] = Category::where('parent_id', '<', '1')->get();
+}
+?>
+==
+{% set posts = blogPosts.posts %}
+
 <!-- Blog Hero -->
 <section class="bg-gradient-to-br from-charcoal via-charcoal to-charcoal/90 py-12 md:py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto">
-            <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4">
-                Unser Blog
-            </h1>
-            <p class="text-lg text-white/80">
-                Tipps, Tricks und Geschichten rund ums Kochen. Entdecke neue Ideen, Techniken und kulinarische Inspirationen.
-            </p>
-        </div>
-    </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto">
+  <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4">
+Unser Blog
+  </h1>
+  <p class="text-lg text-white/80">
+Tipps, Tricks und Geschichten rund ums Kochen. Entdecke neue Ideen, Techniken und kulinarische Inspirationen.
+  </p>
+</div>
+</div>
 </section>
 
+{% if posts is not empty %}
 <!-- Featured Article -->
 <section class="py-8 md:py-12 bg-cream">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-            <a href="/blog/perfekte-pasta-kochen" class="block">
-                <div class="grid md:grid-cols-2">
-                    <div class="relative h-64 md:h-80">
-                        <img 
-                            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80" 
-                            alt="Perfekte Pasta kochen" 
-                            class="w-full h-full object-cover"
-                        >
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
-                                Featured
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col justify-center">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">Kochtipps</span>
-                            <span class="text-xs text-text-muted">15. Januar 2025</span>
-                        </div>
-                        <h2 class="text-xl md:text-2xl lg:text-3xl font-display font-bold text-charcoal mb-3 hover:text-primary transition-colors">
-                            Die 10 Geheimnisse für perfekte Pasta
-                        </h2>
-                        <p class="text-text-muted mb-4 line-clamp-3">
-                            Von der Wahl der richtigen Pasta bis zum perfekten Timing – in diesem umfassenden Guide teilen wir alle Profi-Tipps, die deine Pasta-Gerichte auf das nächste Level heben. Erfahre, warum das Nudelwasser so wichtig ist und welche Fehler du unbedingt vermeiden solltest.
-                        </p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-semibold text-sm">
-                                LM
-                            </div>
-                            <div class="text-sm">
-                                <p class="font-medium text-charcoal">Lisa Müller</p>
-                                <p class="text-text-muted">8 Min Lesezeit</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </article>
-    </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {% set featuredPost = posts.first %}
+    <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+      <a href="{{ featuredPost.url }}" class="block">
+        <div class="grid md:grid-cols-2">
+          <div class="relative h-64 md:h-80">
+            {% if featuredPost.featured_images.count > 0 %}
+              <img
+                src="{{ featuredPost.featured_images.first.getThumb(1200, 800, 'crop') }}"
+                alt="{{ featuredPost.title }}"
+                class="w-full h-full object-cover"
+              >
+            {% else %}
+              {# <img
+                src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80"
+                alt="Default featured image"
+                class="w-full h-full object-cover"
+              > #}
+            {% endif %}
+            <div class="absolute top-4 left-4">
+              <span class="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
+                Featured
+              </span>
+            </div>
+          </div>
+          <div class="p-6 md:p-8 flex flex-col justify-center">
+            <div class="flex items-center gap-3 mb-4">
+              {% if featuredPost.categories.count > 0 %}
+                <span class="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                  {{ featuredPost.categories.first.name }}
+                </span>
+              {% endif %}
+              <span class="text-xs text-text-muted">{{ featuredPost.published_at|date("d. F Y") }}</span>
+            </div>
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-display font-bold text-charcoal mb-3 hover:text-primary transition-colors">
+              {{ featuredPost.title }}
+            </h2>
+            <p class="text-text-muted mb-4 line-clamp-3">
+              {{ featuredPost.excerpt|raw }}
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-semibold text-sm">
+                {{ featuredPost.user.first_name|first|upper }}{{ featuredPost.user.last_name|first|upper }}
+              </div>
+            <div class="text-sm">
+              <p class="font-medium text-charcoal">{{ featuredPost.user.first_name }} {{ featuredPost.user.last_name }}</p>
+              <p class="text-text-muted">{% set readingMinutes = max(1, (featuredPost.content_html|striptags|split(" ")|length / 200)|round(0, "ceil")) %}{{ readingMinutes }} Min Lesezeit</p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </article>
+  </div>
 </section>
 
 <!-- Blog Articles Grid -->
 <section class="py-8 md:py-12 bg-cream">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Category Filter -->
-        <div class="flex flex-wrap items-center gap-2 mb-8">
-            <button class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium transition-colors">
-                Alle
-            </button>
-            <button class="px-4 py-2 bg-white text-charcoal hover:bg-primary hover:text-white rounded-full text-sm font-medium transition-colors">
-                Kochtipps
-            </button>
-            <button class="px-4 py-2 bg-white text-charcoal hover:bg-primary hover:text-white rounded-full text-sm font-medium transition-colors">
-                Zutaten
-            </button>
-            <button class="px-4 py-2 bg-white text-charcoal hover:bg-primary hover:text-white rounded-full text-sm font-medium transition-colors">
-                Küchentechnik
-            </button>
-            <button class="px-4 py-2 bg-white text-charcoal hover:bg-primary hover:text-white rounded-full text-sm font-medium transition-colors">
-                Saisonal
-            </button>
-            <button class="px-4 py-2 bg-white text-charcoal hover:bg-primary hover:text-white rounded-full text-sm font-medium transition-colors">
-                Interviews
-            </button>
-        </div>
-
-        <!-- Articles Grid -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- Article 1 -->
-            <article class="group">
-                <a href="/blog/gewuerze-richtig-lagern" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=80" 
-                            alt="Gewürze richtig lagern" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-secondary bg-secondary/10 px-2 py-1 rounded-full">Zutaten</span>
-                            <span class="text-xs text-text-muted">12. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            So lagerst du Gewürze richtig für maximales Aroma
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Frische Gewürze machen den Unterschied in jedem Gericht. Erfahre, wie du deine Gewürzsammlung optimal aufbewahrst.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>5 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 2 -->
-            <article class="group">
-                <a href="/blog/sauerteig-anfaenger" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" 
-                            alt="Sauerteig für Anfänger" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">Küchentechnik</span>
-                            <span class="text-xs text-text-muted">10. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Sauerteig für Anfänger: Der komplette Guide
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Dein eigener Sauerteig-Starter in nur 7 Tagen. Mit Schritt-für-Schritt Anleitung und allen Tipps, die du brauchst.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>12 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 3 -->
-            <article class="group">
-                <a href="/blog/saisonaler-kochen-winter" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1606923829579-0cb981a83e2e?w=600&q=80" 
-                            alt="Saisonal kochen im Winter" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Saisonal</span>
-                            <span class="text-xs text-text-muted">8. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Saisonal kochen im Winter: Diese Gemüsesorten haben jetzt Saison
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Kohl, Wurzelgemüse und mehr – entdecke die Stars der Wintersaison und leckere Rezeptideen dazu.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>7 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 4 -->
-            <article class="group">
-                <a href="/blog/interview-sternekoch-schmidt" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80" 
-                            alt="Interview mit Sternekoch" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-charcoal bg-charcoal/10 px-2 py-1 rounded-full">Interviews</span>
-                            <span class="text-xs text-text-muted">5. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Interview: Sternekoch Thomas Schmidt über moderne deutsche Küche
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Ein exklusives Gespräch über Tradition, Innovation und was die deutsche Küche so besonders macht.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>10 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 5 -->
-            <article class="group">
-                <a href="/blog/messerschaerfen-guide" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1593618998160-e34014e67546?w=600&q=80" 
-                            alt="Messerschärfen Guide" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">Küchentechnik</span>
-                            <span class="text-xs text-text-muted">3. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Der ultimative Guide zum Messerschärfen zu Hause
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Scharfe Messer sind sicherer und machen das Kochen zum Vergnügen. So schärfst du wie ein Profi.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>6 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 6 -->
-            <article class="group">
-                <a href="/blog/olivenoel-kaufguide" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80" 
-                            alt="Olivenöl Kaufguide" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-secondary bg-secondary/10 px-2 py-1 rounded-full">Zutaten</span>
-                            <span class="text-xs text-text-muted">1. Januar 2025</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Olivenöl: Wie du gute Qualität erkennst
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Extra vergine, kaltgepresst, naturtrüb – was bedeutet das alles? Unser Kaufguide klärt auf.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>4 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 7 -->
-            <article class="group">
-                <a href="/blog/fermentieren-basics" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=600&q=80" 
-                            alt="Fermentieren Basics" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-accent bg-accent/10 px-2 py-1 rounded-full">Küchentechnik</span>
-                            <span class="text-xs text-text-muted">28. Dezember 2024</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Fermentieren für Einsteiger: Kimchi, Sauerkraut & Co.
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Die uralte Kunst des Fermentierens erlebt ein Revival. So startest du mit deinen ersten fermentierten Köstlichkeiten.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>9 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 8 -->
-            <article class="group">
-                <a href="/blog/weihnachtsbacken-tipps" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&q=80" 
-                            alt="Weihnachtsbacken Tipps" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Saisonal</span>
-                            <span class="text-xs text-text-muted">20. Dezember 2024</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            10 Fehler beim Weihnachtsbacken und wie du sie vermeidest
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Plätzchen werden hart, Lebkuchen bleiben blass? Mit diesen Tipps gelingen deine Weihnachtsklassiker garantiert.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>6 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Article 9 -->
-            <article class="group">
-                <a href="/blog/nachhaltigkeit-kueche" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img 
-                            src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80" 
-                            alt="Nachhaltigkeit in der Küche" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-medium text-secondary bg-secondary/10 px-2 py-1 rounded-full">Kochtipps</span>
-                            <span class="text-xs text-text-muted">15. Dezember 2024</span>
-                        </div>
-                        <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                            Nachhaltig kochen: Kleine Änderungen mit großer Wirkung
-                        </h3>
-                        <p class="text-text-muted text-sm line-clamp-2 mb-4">
-                            Food Waste reduzieren, clever einkaufen und umweltbewusst kochen – praktische Tipps für deinen Alltag.
-                        </p>
-                        <div class="flex items-center gap-2 text-xs text-text-muted">
-                            <span>7 Min Lesezeit</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-        </div>
-
-        <!-- Pagination -->
-        <nav class="flex items-center justify-center gap-2 mt-12">
-            <!-- Prev Button -->
-            <button disabled class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-text-muted cursor-not-allowed opacity-50">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-            </button>
-
-            <!-- Page Numbers -->
-            <div class="flex items-center gap-1">
-                <button class="w-10 h-10 rounded-lg bg-primary text-white font-medium">1</button>
-                <button class="w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal font-medium transition-colors">2</button>
-                <button class="w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal font-medium transition-colors">3</button>
-                <span class="w-10 h-10 flex items-center justify-center text-text-muted">...</span>
-                <button class="w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal font-medium transition-colors">8</button>
-            </div>
-
-            <!-- Next Button -->
-            <button class="flex items-center justify-center w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </button>
-        </nav>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Category Filter -->
+    <div class="flex flex-wrap items-center gap-2 mb-8">
+      <a href="/blog" class="px-4 py-2 {% if not categoryFilter %}bg-primary text-white{% else %}bg-white text-charcoal hover:bg-primary hover:text-white{% endif %} rounded-full text-sm font-medium transition-colors" data-request="" data-request-data="category: ''">
+        Alle
+      </a>
+      {% for cat in categories %}
+        <a href="/blog/1/{{ cat.slug }}" class="px-4 py-2 {% if categoryFilter == cat.slug %}bg-primary text-white{% else %}bg-white text-charcoal hover:bg-primary hover:text-white{% endif %} rounded-full text-sm font-medium transition-colors">
+          {{ cat.name }}
+        </a>
+      {% endfor %}
     </div>
+
+    <!-- Articles Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {% for post in blogPosts.posts %}
+        <article class="group">
+          <a href="{{ post.url }}" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+            <div class="relative h-48 overflow-hidden">
+              {% if post.featured_images.count > 0 %}
+                <img
+                  src="{{ post.featured_images.first.getThumb(600, 400, 'crop') }}"
+                  alt="{{ post.title }}"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                >
+              {% else %}
+                {# <img
+                  src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80"
+                  alt="Default featured image"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                > #}
+              {% endif %}
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-3">
+                {% if post.categories.count > 0 %}
+                  <span class="text-xs font-medium text-secondary bg-secondary/10 px-2 py-1 rounded-full">
+                    {{ post.categories.first.name }}
+                  </span>
+                {% endif %}
+                <span class="text-xs text-text-muted">{{ post.published_at|date("d. F Y") }}</span>
+              </div>
+              <h3 class="font-semibold text-charcoal text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                {{ post.title }}
+              </h3>
+              <p class="text-text-muted text-sm line-clamp-2 mb-4">
+                {{ post.excerpt|raw }}
+              </p>
+            <div class="flex items-center gap-2 text-xs text-text-muted">
+              <span>{% set readingMinutes = max(1, (post.content_html|striptags|split(" ")|length / 200)|round(0, "ceil")) %}{{ readingMinutes }} Min Lesezeit</span>
+            </div>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if blogPosts.posts.lastPage > 1 %}
+      <nav class="flex items-center justify-center gap-2 mt-12">
+        {% if blogPosts.posts.currentPage > 1 %}
+          <a href="{{ this.page.baseFileName|page({ (this.page.paramName('page')): (blogPosts.posts.currentPage - 1) }) }}" class="flex items-center justify-center w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </a>
+        {% else %}
+          <button disabled class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-text-muted cursor-not-allowed opacity-50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+        {% endif %}
+
+        <div class="flex items-center gap-1">
+          {% for page in 1..blogPosts.posts.lastPage %}
+            {% if page == blogPosts.posts.currentPage %}
+              <button class="w-10 h-10 rounded-lg bg-primary text-white font-medium">{{ page }}</button>
+            {% else %}
+              <a href="{{ this.page.baseFileName|page({ (this.page.paramName('page')): page }) }}" class="w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal font-medium transition-colors">{{ page }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if blogPosts.posts.lastPage > blogPosts.posts.currentPage %}
+          <a href="{{ this.page.baseFileName|page({ (this.page.paramName('page')): (blogPosts.posts.currentPage + 1) }) }}" class="flex items-center justify-center w-10 h-10 rounded-lg bg-white hover:bg-primary/10 text-charcoal transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        {% else %}
+          <button disabled class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-text-muted cursor-not-allowed opacity-50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </div>
 </section>
+{% else %}
+<!-- When no posts available -->
+<section class="py-12 md:py-16 bg-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <div class="text-4xl mb-4">📚</div>
+      <h2 class="text-2xl md:text-3xl font-display font-bold text-charcoal mb-4">
+Noch keine Artikel veröffentlicht
+      </h2>
+      <p class="text-text-muted mb-8">
+        Komm bald wieder - wir arbeiten an neuen Inhalten!
+      </p>
+      <a href="/" class="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors">
+        Zurück zur Startseite
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <!-- Newsletter Section -->
 <section class="py-12 md:py-16 bg-charcoal">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="text-4xl mb-4">📬</div>
-        <h2 class="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-            Keine neuen Artikel verpassen
-        </h2>
-        <p class="text-white/80 mb-8">
-            Abonniere unseren Newsletter und erhalte wöchentlich die neuesten Artikel, Rezepte und Kochtipps direkt in dein Postfach.
-        </p>
-        <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input 
-                type="email" 
-                placeholder="Deine E-Mail-Adresse" 
-                class="flex-1 px-5 py-3 rounded-xl border-0 bg-white/10 text-white placeholder-white/50 focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-            <button 
-                type="submit" 
-                class="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-medium rounded-xl transition-colors whitespace-nowrap"
-            >
-                Abonnieren
-            </button>
-        </form>
-        <p class="text-white/50 text-sm mt-4">
-            Wir respektieren deine Privatsphäre. Jederzeit abbestellbar.
-        </p>
-    </div>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="text-4xl mb-4">📬</div>
+    <h2 class="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+      Keine neuen Artikel verpassen
+    </h2>
+    <p class="text-white/80 mb-8">
+      Abonniere unseren Newsletter und erhalte wöchentlich die neuesten Artikel, Rezepte und Kochtipps direkt in dein Postfach.
+    </p>
+    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <input
+        type="email"
+        placeholder="Deine E-Mail-Adresse"
+        class="flex-1 px-5 py-3 rounded-xl border-0 bg-white/10 text-white placeholder-white/50 focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+      <button
+        type="submit"
+        class="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-medium rounded-xl transition-colors whitespace-nowrap"
+      >
+        Abonnieren
+      </button>
+    </form>
+    <p class="text-white/50 text-sm mt-4">
+      Wir respektieren deine Privatsphäre. Jederzeit abbestellbar.
+    </p>
+  </div>
 </section>
