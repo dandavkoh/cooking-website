@@ -34,16 +34,15 @@ Event::listen('system.beforeRoute', function () {
 
         /*
         |--------------------------------------------------------------------------
-        | Future API Routes (extensible design)
+        | Blog Post API Routes
         |--------------------------------------------------------------------------
-        |
-        | Add routes for blogs, products, etc. following the same pattern:
-        |
-        | Route::prefix('posts')->group(function () {
-        |     Route::post('/', 'Ddk\Api\Controllers\Api\PostController@store');
-        |     // ...
-        | });
-        |
         */
+        Route::prefix('posts')->group(function () {
+            Route::get('/', 'Ddk\Api\Controllers\Api\BlogPostController@index');
+            Route::post('/', 'Ddk\Api\Controllers\Api\BlogPostController@store');
+            Route::get('/{id}', 'Ddk\Api\Controllers\Api\BlogPostController@show');
+            Route::put('/{id}', 'Ddk\Api\Controllers\Api\BlogPostController@update');
+            Route::delete('/{id}', 'Ddk\Api\Controllers\Api\BlogPostController@destroy');
+        });
     });
 });
