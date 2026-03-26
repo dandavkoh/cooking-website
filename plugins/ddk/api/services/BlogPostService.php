@@ -44,16 +44,16 @@ class BlogPostService
                 $contentImagesMap = $this->buildContentImagesMap($data['content_images'] ?? []);
                 $this->validateImagePlaceholders($imagePlaceholders, $contentImagesMap);
 
-                // 4. Create the blog post
-                $post = Post::create([
-                    'title' => $data['title'],
-                    'slug' => $slug,
-                    'content' => $data['content'], // Original content with placeholders
-                    'excerpt' => $data['excerpt'] ?? null,
-                    'user_id' => $data['author_id'],
-                    'published' => $isPublished,
-                    'published_at' => $publishedAt,
-                ]);
+                // 4. Create the blog post (mass assignment not supported, set attributes individually)
+                $post = new Post();
+                $post->title = $data['title'];
+                $post->slug = $slug;
+                $post->content = $data['content']; // Original content with placeholders
+                $post->excerpt = $data['excerpt'] ?? null;
+                $post->user_id = $data['author_id'];
+                $post->published = $isPublished;
+                $post->published_at = $publishedAt;
+                $post->save();
 
                 // 5. Attach categories
                 if (!empty($data['categories'])) {
@@ -73,7 +73,7 @@ class BlogPostService
                 }
 
                 // 8. Reload post with all relationships
-                return $post->fresh(['categories', 'featured_images', 'content_images', 'author']);
+                return $post->fresh(['categories', 'featured_images', 'content_images', 'user']);
             });
         } catch (Exception $e) {
             throw new ApiException(
@@ -303,10 +303,10 @@ class BlogPostService
             'published_at' => $post->published_at?->toIso8601String(),
             'created_at' => $post->created_at?->toIso8601String(),
             'updated_at' => $post->updated_at?->toIso8601String(),
-            'author' => $post->author ? [
-                'id' => $post->author->id,
-                'name' => $post->author->name,
-                'email' => $post->author->email,
+            'author' => $post->user ? [
+                'id' => $post->user->id,
+                'name' => $post->user->name,
+                'email' => $post->user->email,
             ] : null,
             'categories' => $post->categories->map(fn($cat) => [
                 'id' => $cat->id,
