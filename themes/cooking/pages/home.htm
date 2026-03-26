@@ -48,21 +48,22 @@ postPage = "blog-article"
                 </p>
 
                 <!-- Search Bar -->
-                <div class="flex flex-col sm:flex-row gap-3 mb-10">
-                    <div class="relative flex-1">
-                        <input 
-                            type="text" 
-                            placeholder="Was möchtest du kochen?" 
-                            class="w-full pl-12 pr-4 py-4 rounded-full border-0 text-charcoal text-base focus:ring-4 focus:ring-primary/30 shadow-lg"
-                        >
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </div>
-                    <button class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-medium transition-all shadow-lg hover:shadow-xl whitespace-nowrap">
-                        Rezepte finden
-                    </button>
-                </div>
+                <form action="/rezepte" method="GET" class="flex flex-col sm:flex-row gap-3 mb-10">
+                  <div class="relative flex-1">
+                    <input
+                      type="text"
+                      name="q"
+                      placeholder="Was möchtest du kochen?"
+                      class="w-full pl-12 pr-4 py-4 rounded-full border-0 text-charcoal text-base focus:ring-4 focus:ring-primary/30 shadow-lg"
+                    >
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                  </div>
+                  <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-medium transition-all shadow-lg hover:shadow-xl whitespace-nowrap">
+                    Rezepte finden
+                  </button>
+                </form>
 
                 <!-- Popular Tags -->
                 <div class="flex flex-wrap gap-2">
