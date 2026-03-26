@@ -1,0 +1,319 @@
+title = "Kontakt"
+url = "/kontakt"
+layout = "default"
+==
+<section class="bg-gradient-to-r from-primary via-primary to-primary-dark py-10 md:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3">
+        Kontakt
+      </h1>
+      <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
+        Haben Sie Fragen, Anregungen oder Feedback? Wir freuen uns von Ihnen zu hören!
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 md:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-8 md:gap-12">
+      
+      <!-- Contact Form -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <h2 class="text-2xl font-display font-bold text-charcoal mb-6 pb-2 border-b border-primary/20">
+          Kontaktformular
+        </h2>
+        
+        <form id="contact-form" method="POST" action="" data-request="onContactSubmit" data-request-success="alert('Vielen Dank für Ihre Nachricht! Wir werden uns so schnell wie möglich bei Ihnen melden.')" data-request-error="alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder senden Sie uns eine E-Mail.')" class="space-y-5">
+          <input type="hidden" name="_handler" value="onContactSubmit">
+          
+          <div>
+            <label for="contact-name" class="block text-sm font-medium text-charcoal mb-2">
+              Ihr Name <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+              placeholder="Max Mustermann"
+            >
+          </div>
+          
+          <div>
+            <label for="contact-email" class="block text-sm font-medium text-charcoal mb-2">
+              E-Mail-Adresse <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+              placeholder="max@example.com"
+            >
+          </div>
+          
+          <div>
+            <label for="contact-subject" class="block text-sm font-medium text-charcoal mb-2">
+              Betreff <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="contact-subject"
+              name="subject"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            >
+              <option value="">Bitte wählen...</option>
+              <option value="recipe-question">Frage zu einem Rezept</option>
+              <option value="technical-question">Technische Frage</option>
+              <option value="collaboration">Kooperationsanfrage</option>
+              <option value="advertising">Werbung / Affiliate</option>
+              <option value="newsletter">Newsletter</option>
+              <option value="other">Sonstiges</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="contact-recipe" class="block text-sm font-medium text-charcoal mb-2">
+              Rezept (falls zutreffend)
+            </label>
+            <input
+              type="text"
+              id="contact-recipe"
+              name="recipe"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+              placeholder="Name des Rezepts oder URL"
+            >
+          </div>
+          
+          <div>
+            <label for="contact-message" class="block text-sm font-medium text-charcoal mb-2">
+              Ihre Nachricht <span class="text-red-500">*</span>
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="6"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none"
+              placeholder="Ihre Nachricht an uns..."
+            ></textarea>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <input
+              type="checkbox"
+              id="contact-privacy"
+              name="privacy"
+              required
+              class="mt-1 w-4 h-4 rounded text-primary focus:ring-primary"
+            >
+            <label for="contact-privacy" class="text-sm text-gray-700">
+              Ich habe die <a href="/datenschutz" class="text-primary hover:text-primary-dark underline underline-offset-4">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten gemäß dieser zu. <span class="text-red-500">*</span>
+            </label>
+          </div>
+          
+          <button
+            type="submit"
+            class="w-full bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-xl transition-all transform hover:scale-[1.02]"
+          >
+            Nachricht senden
+          </button>
+        </form>
+        
+        <!-- Success/Error Messages -->
+        <div id="contact-success" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
+          </div>
+        </div>
+        
+        <div id="contact-error" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+            Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Information -->
+      <div class="space-y-6">
+        <!-- Direct Contact -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-2xl font-display font-bold text-charcoal mb-6 pb-2 border-b border-primary/20">
+            Direkter Kontakt
+          </h2>
+          
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-charcoal">E-Mail</h3>
+                <p class="text-gray-700">[Ihre E-Mail Adresse]</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-charcoal">Telefon</h3>
+                <p class="text-gray-700">[Ihre Telefonnummer]</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-charcoal">Adresse</h3>
+                <p class="text-gray-700">
+                  [Ihr Name]<br>
+                  [Straße Hausnummer]<br>
+                  [PLZ Ort]<br>
+                  Deutschland
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 p-4 bg-blue-50 rounded-xl">
+            <h3 class="text-sm font-semibold text-charcoal mb-2">Antwortzeiten:</h3>
+            <p class="text-sm text-gray-700">
+              Wir bemühen uns, alle Anfragen innerhalb von <strong>24-48 Stunden</strong> zu beantworten. Wochentags (Mo-Fr) in der Regel schneller.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-2xl font-display font-bold text-charcoal mb-6 pb-2 border-b border-primary/20">
+            Social Media
+          </h2>
+          
+          <p class="text-gray-700 mb-6">
+            Folgen Sie uns auch auf Social Media für tägliche Inspiration!
+          </p>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex items-center space-x-3 p-3 bg-warm-gray rounded-xl">
+              <a href="#" class="w-10 h-10 bg-facebook rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <div>
+                <h3 class="text-sm font-medium text-charcoal">Facebook</h3>
+                <p class="text-xs text-gray-600">/zutato</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 p-3 bg-warm-gray rounded-xl">
+              <a href="#" class="w-10 h-10 bg-instagram rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <div>
+                <h3 class="text-sm font-medium text-charcoal">Instagram</h3>
+                <p class="text-xs text-gray-600">@zutato</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 p-3 bg-warm-gray rounded-xl">
+              <a href="#" class="w-10 h-10 bg-pinterest rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform" style="background-color: #e60023;">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+              </a>
+              <div>
+                <h3 class="text-sm font-medium text-charcoal">Pinterest</h3>
+                <p class="text-xs text-gray-600">/zutato</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 p-3 bg-warm-gray rounded-xl">
+              <a href="#" class="w-10 h-10 bg-youtube rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform" style="background-color: #FF0000;">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+              <div>
+                <h3 class="text-sm font-medium text-charcoal">YouTube</h3>
+                <p class="text-xs text-gray-600">Zutato Cooking</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- FAQ Quick Help -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-2xl font-display font-bold text-charcoal mb-6 pb-2 border-b border-primary/20">
+            Häufige Fragen
+          </h2>
+          
+          <div class="space-y-4">
+            <div class="p-4 bg-warm-gray rounded-xl">
+              <h3 class="text-sm font-semibold text-charcoal mb-2">Wie lange dauert die Antwort auf meine Anfrage?</h3>
+              <p class="text-sm text-gray-700">In der Regel antworten wir innerhalb von 24-48 Stunden, meistens am selben Werktag.</p>
+            </div>
+            
+            <div class="p-4 bg-warm-gray rounded-xl">
+              <h3 class="text-sm font-semibold text-charcoal mb-2">Kann ich Rezeptideen vorschlagen?</h3>
+              <p class="text-sm text-gray-700">Ja, sehr gerne! Wir freuen uns immer über Ideen und Vorschläge von unseren Lesern.</p>
+            </div>
+            
+            <div class="p-4 bg-warm-gray rounded-xl">
+              <h3 class="text-sm font-semibold text-charcoal mb-2">Wie kann ich den Newsletter abbestellen?</h3>
+              <p class="text-sm text-gray-700">Ganz einfach: Klicken Sie in jedem Newsletter auf den "Abmelden"-Link am Ende der E-Mail.</p>
+            </div>
+            
+            <div class="p-4 bg-warm-gray rounded-xl">
+              <h3 class="text-sm font-semibold text-charcoal mb-2">Bieten Sie auch Kooperationen an?</h3>
+              <p class="text-sm text-gray-700">Ja, wählen Sie im Formular "Kooperationsanfrage" als Betreff aus.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Fallback for non-AJAX form submission
+$(document).ready(function() {
+  var form = $('#contact-form');
+  
+  form.on('ajaxSuccess', function() {
+    form[0].reset();
+    $('#contact-success').removeClass('hidden');
+    $('html, body').animate({
+      scrollTop: $('#contact-success').offset().top - 100
+    }, 500);
+  });
+  
+  form.on('ajaxError', function() {
+    $('#contact-error').removeClass('hidden');
+  });
+});
+</script>
