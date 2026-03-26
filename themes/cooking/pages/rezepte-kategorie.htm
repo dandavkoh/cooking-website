@@ -6,30 +6,52 @@ layout = "default"
 categoryFilter = "{{ :slug }}"
 categoryPage = "rezepte-kategorie"
 ==
-{% set category = null %}
-{% set categorySlug = this.param.slug %}
+<?php
+use Ddk\Recipe\Models\Category;
+use Illuminate\Support\Facades\Request;
 
-{% if categorySlug %}
-    {% set category = categoryFilter.getCategoryBySlug(categorySlug) %}
-{% endif %}
+function onStart() {
+    $slug = $this->param('slug');
+    
+    if (!empty($slug)) {
+        // Load category by slug
+        $category = Category::where('slug', $slug)->first();
+        
+        if ($category) {
+            // Valid category: merge ID into request object (component reads from request()->get())
+            Request::merge(['categories' => $category->id]);
+            
+            // Set page variables for template
+            $this['pageTitle'] = $category->title;
+            $this['pageDescription'] = 'Entdecke leckere Rezepte in der Kategorie ' . $category->title;
+            $this['category'] = $category;
+        } else {
+            // Invalid category: force empty results
+            Request::merge(['categories' => '-1']);
+            
+            $this['pageTitle'] = 'Rezepte nach Kategorie';
+            $this['pageDescription'] = 'Entdecke köstliche Rezepte für jeden Geschmack und Anlass';
+            $this['category'] = null;
+        }
+    } else {
+        // No slug provided - show all recipes
+        $this['pageTitle'] = 'Rezepte nach Kategorie';
+        $this['pageDescription'] = 'Entdecke köstliche Rezepte für jeden Geschmack und Anlass';
+        $this['category'] = null;
+    }
+}
+?>
+==
 
 <!-- Page Header -->
 <section class="bg-gradient-to-r from-primary via-primary to-primary-dark py-10 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3">
-                {% if category %}
-                    {{ category.title }}
-                {% else %}
-                    Rezepte nach Kategorie
-                {% endif %}
+                {{ pageTitle }}
             </h1>
             <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
-                {% if category %}
-                    Entdecke leckere Rezepte in der Kategorie {{ category.title }}
-                {% else %}
-                    Entdecke köstliche Rezepte für jeden Geschmack und Anlass
-                {% endif %}
+                {{ pageDescription }}
             </p>
         </div>
     </div>
@@ -68,9 +90,9 @@ categoryPage = "rezepte-kategorie"
                 <article class="group">
                     <a href="{{ recipe.url }}" class="block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
                         <div class="relative h-44 md:h-48 overflow-hidden">
-                            <img 
-                                src="{% if recipe.images.first %}{{ recipe.images.first.path }}{% else %}https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=640&q=80{% endif %}" 
-                                alt="{{ recipe.title }}" 
+                            <img
+                                src="{% if recipe.images.first %}{{ recipe.images.first.path }}{% else %}https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=640&q=80{% endif %}"
+                                alt="{{ recipe.title }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             >
                             <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
