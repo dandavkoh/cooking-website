@@ -1,0 +1,109 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  rootFolder: $(System.DefaultWorkingDirectory)
+  themePath: 'themes/cooking'
+  nodeVersion: '24.13.0'
+  phpVersion: '8.3'
+  
+stages:
+- stage: Build
+  displayName: Build project
+  jobs:  
+  - job: Build
+    displayName: Build & package
+    steps:
+
+    # -------------------------
+    # Node (Tailwind/Vite)
+    # -------------------------
+    - task: NodeTool@0
+      inputs:
+        versionSpec: $(nodeVersion)
+      displayName: 'Install Node.js version $(nodeVersion)'
+
+    - script: |
+        cd $(themePath)
+        npm ci
+        npm run build
+      displayName: 'Build frontend assets'
+
+    # -------------------------
+    # PHP / Composer
+    # -------------------------
+    - script: |
+        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+        php -version
+      workingDirectory: $(rootFolder)
+      displayName: 'Use PHP version $(phpVersion)'
+
+    - script: composer install --no-interaction --no-dev --optimize-autoloader --prefer-dist
+      workingDirectory: $(rootFolder)
+      displayName: 'Install PHP dependencies'
+
+    - task: DeleteFiles@1
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: 'node_modules'
+      displayName: 'Delete node_modules folder from DefaultWorkingDirectory'
+
+    # -------------------------
+    # Optimize Laravel/Winter
+    # -------------------------
+    - script: |
+        php artisan config:clear
+        php artisan cache:clear
+        php artisan view:clear
+      displayName: 'Clear caches'
+
+    # (optional, if config caching work)
+    # php artisan config:cache
+
+    # -------------------------
+    # Cleanup (important!)
+    # -------------------------
+    - task: DeleteFiles@1
+      inputs:
+        SourceFolder: '$(rootFolder)'
+        Contents: |
+          node_modules
+          **/node_modules
+          tests
+          .git
+          .github
+          storage/logs/*
+      displayName: 'Cleanup unnecessary files'
+
+    # -------------------------
+    # Create ZIP
+    # -------------------------
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(rootFolder)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+        replaceExistingArchive: true
+      displayName: 'Create deployment ZIP'
+
+    # -------------------------
+    # Publish artifact
+    # -------------------------
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+      displayName: 'Publish Artifact'
