@@ -33,7 +33,7 @@ stages:
 
     - script: |
         cd $(themePath)
-        npm ci
+        npm install
         npm run build
       displayName: 'Build frontend assets'
 
